@@ -17,8 +17,10 @@
             "cache": false
         },
         "test": {
-            "outputs": [],
-            "dependsOn": ["build"]
+            "cache": false
+        },
+        "test:coverage": {
+            "cache": false
         }
     }
 }
