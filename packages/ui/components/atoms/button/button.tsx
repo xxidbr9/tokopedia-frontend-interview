@@ -35,19 +35,19 @@ const ButtonStyled = styled.button<ButtonProps>`
   outline: none;
   border: none;
   transition: ease-out 100ms;
-  
   ${props => props.isIcon && `
   padding: 8px;
   border-radius: 32px;
   `}
 
-  ${props => !props.isIcon && `
+${props => !props.isIcon && `
   border-radius: 12px;
   padding: 12px 16px;
   gap: 8px;
   `}
 
-  ${props => !props.disabled && `
+${props => !props.disabled && `
+  cursor: pointer;
   &:active{
     scale: .98;
   }
@@ -61,7 +61,7 @@ const ButtonStyled = styled.button<ButtonProps>`
   `}
 `
 
-export const Button: React.FC<ButtonProps> = ({ suffix, prefix, children, isIcon, ...props }) => {
+const Button: React.FC<ButtonProps> = ({ suffix, prefix, children, isIcon, ...props }) => {
   return (
     <ButtonStyled {...props} isIcon={isIcon} data-testid="button">
       {!!prefix && prefix}
@@ -77,3 +77,5 @@ Button.defaultProps = {
   type: 'button',
   isIcon: false,
 }
+
+export default Button
