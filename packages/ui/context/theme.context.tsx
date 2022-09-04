@@ -1,16 +1,13 @@
 import React from "react";
-import defaultTheme from "../theme";
+import theme from "ui/theme";
 
 const ThemeContext = React.createContext({
-  theme: defaultTheme,
-  setTheme: (theme: typeof defaultTheme) => { }
+  theme,
 });
 
 const ThemeProvider = ({ children }: any) => {
-  const [theme, setTheme] = React.useState(defaultTheme);
-
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
+    <ThemeContext.Provider value={{ theme }}>
       {children}
     </ThemeContext.Provider>
   );

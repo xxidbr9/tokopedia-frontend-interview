@@ -1,6 +1,7 @@
-export { default as theme } from './theme'
+// theme
+export * from './theme'
 
-// context/theme
+// context
 export * from './context'
 
 // hooks
