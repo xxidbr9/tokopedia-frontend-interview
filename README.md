@@ -1,4 +1,4 @@
-<img src="./.github/misc/Banner.jpg">
+<img src="./.github/misc/Banner.jpg" width="100%">
 
 # Tokopedia Interview Test : We Boo
 
