@@ -2,13 +2,13 @@ import styled from '@emotion/styled'
 import React from 'react'
 import colors from 'ui/theme/colors'
 
-type ButtonProps = JSX.IntrinsicElements['button'] & {
+type ButtonProps = {
   children: React.ReactNode
-  prefix?: React.ReactNode | React.ReactElement | JSX.Element
-  suffix?: React.ReactNode
+  prefixIcon?: React.ReactNode | React.ReactElement | JSX.Element
+  suffixIcon?: React.ReactNode
   isIcon?: boolean
   isOpacity?: boolean
-}
+} & JSX.IntrinsicElements['button']
 
 
 const ButtonInnerStyled = styled.span<{ isIcon?: boolean }>`
@@ -42,7 +42,7 @@ const ButtonStyled = styled.button<ButtonProps>`
 
 ${props => !props.isIcon && `
   border-radius: 12px;
-  padding: 12px 16px;
+  padding: 12px 32px;
   gap: 8px;
   `}
 
@@ -61,14 +61,14 @@ ${props => !props.disabled && `
   `}
 `
 
-const Button: React.FC<ButtonProps> = ({ suffix, prefix, children, isIcon, ...props }) => {
+const Button: React.FC<ButtonProps> = ({ suffixIcon, prefixIcon, children, isIcon, ...props }) => {
   return (
     <ButtonStyled {...props} isIcon={isIcon} data-testid="button">
-      {!!prefix && prefix}
+      {!!prefixIcon && prefixIcon}
       <ButtonInnerStyled isIcon={isIcon}>
         {children}
       </ButtonInnerStyled>
-      {!!suffix && suffix}
+      {!!suffixIcon && suffixIcon}
     </ButtonStyled>
   )
 }

@@ -17,7 +17,7 @@ describe("Button", () => {
 
   it("should render with prefix", () => {
     const { getByTestId } = render(
-      <Button prefix={<div data-testid="prefix">Prefix</div> as any}>Button</Button>
+      <Button prefixIcon={<div data-testid="prefix">Prefix</div>}>Button</Button>
     );
     const prefix = getByTestId("prefix");
     expect(prefix).toBeInTheDocument();
@@ -25,7 +25,7 @@ describe("Button", () => {
 
   it("should render with suffix", () => {
     const { getByTestId } = render(
-      <Button suffix={<div data-testid="suffix">Suffix</div>}>Button</Button>
+      <Button suffixIcon={<div data-testid="suffix">Suffix</div>}>Button</Button>
     );
     const suffix = getByTestId("suffix");
     expect(suffix).toBeInTheDocument();
