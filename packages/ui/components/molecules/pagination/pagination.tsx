@@ -1,6 +1,8 @@
 import styled from '@emotion/styled'
 import React, { useMemo } from 'react'
 import colors from 'ui/theme/colors'
+import LeftIcon from './svg/left.svg'
+import RightIcon from './svg/right.svg'
 
 type PaginationProps = {
   count?: number
@@ -74,7 +76,7 @@ const Pagination: React.FC<PaginationProps> = (props) => {
     <PaginationWrapperStyled data-testid="pagination">
       <li>
         <ButtonStyled data-testid="pagination-prev" onClick={handlePervious}>
-          Prev
+          <LeftIcon color={colors.textSecondary} />
         </ButtonStyled>
       </li>
       {renderRange.map((page) => (
@@ -96,7 +98,7 @@ const Pagination: React.FC<PaginationProps> = (props) => {
       ))}
       <li>
         <ButtonStyled data-testid="pagination-next" onClick={handleNext}>
-          Next
+          <RightIcon color={colors.textSecondary} />
         </ButtonStyled>
       </li>
     </PaginationWrapperStyled>
@@ -137,10 +139,15 @@ const ButtonStyled = styled.button<ButtonStyledProps>`
     :hover{
       background-color: ${colors.onSurface};
       color: ${colors.textPrimary};
+      svg path{
+        fill: ${colors.textPrimary};
+      }
     }
   `}
-
-  transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  &:active{
+    scale: .95;
+  }
+  transition: all color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 `
 
 

@@ -15,7 +15,12 @@ export const Body = styled.body<BodyProps>`
   margin: 0;
   padding: 0;
   transition: background-color 0.2s ease-out, color 0.2s ease-out;
+  font-family: 'Airbnb Cereal App';
   ${cerealFontFace}
+  * {
+    font-size: 100%;
+    font-family: 'Airbnb Cereal App';
+  }
 `;
 
 Body.defaultProps = {
