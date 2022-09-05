@@ -5,7 +5,7 @@
     "types": "./index.tsx",
     "license": "MIT",
     "scripts": {
-        "lint": "eslint *.ts*",
+        "lint": "eslint *.ts* --fix",
         "test": "export TS_JEST_DISABLE_VER_CHECKER=true && jest",
         "test:ci": "jest --ci",
         "test:coverage": "yarn test --coverage"
