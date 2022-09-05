@@ -8,6 +8,9 @@ const colors = {
   onSurface: 'rgba(255, 255, 255, 0.15);',
   surface: '#111111',
   disabled: 'rgba(255, 255, 255, 0.3)',
+
+  // background
+  inputSurface: "#232323",
 }
 
 export default colors
