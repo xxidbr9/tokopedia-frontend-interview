@@ -13,6 +13,7 @@ const GridStyled = styled.div<GridProps>`
   grid-template-columns: repeat(${props => props.columns}, 1fr);
   width: 100%;
   column-gap: ${props => `${props.gap}px`};
+  row-gap: ${props => props.columns === 12 ? `2rem` : `24px`};
 `;
 
 

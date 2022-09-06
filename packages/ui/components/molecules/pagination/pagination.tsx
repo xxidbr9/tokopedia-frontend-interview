@@ -5,11 +5,13 @@ import LeftIcon from './svg/left.svg'
 import RightIcon from './svg/right.svg'
 
 type PaginationProps = {
-  count?: number
   defaultPage?: number
   onChange: (page: number) => void
   siblingCount?: number
   boundaryCount?: number
+  position: 'left' | 'center' | 'right'
+  total?: number
+  pageSize?: number
 }
 
 const range = (start: number, end: number) => {
@@ -18,7 +20,13 @@ const range = (start: number, end: number) => {
 };
 
 const Pagination: React.FC<PaginationProps> = (props) => {
-  const { count = 1, defaultPage = 1, onChange, boundaryCount = 1, siblingCount = 1 } = props
+  const { defaultPage = 1, onChange, boundaryCount = 1, siblingCount = 1, pageSize = 1, total = 10 } = props
+
+  const count = useMemo(() => {
+    const totalPage = Math.ceil(total / pageSize)
+    return totalPage
+  }, [total, pageSize])
+
   const [currentPage, setCurrentPage] = React.useState(defaultPage)
 
   const handlePervious = () => {
@@ -58,7 +66,7 @@ const Pagination: React.FC<PaginationProps> = (props) => {
         currentPage + siblingCount,
         boundaryCount + siblingCount * 2 + 2,
       ),
-      endPages.length > 0 ? endPages[0] - 1 : count - 1,
+      endPages[0] - 1,
     );
 
     const itemList = [
@@ -73,9 +81,9 @@ const Pagination: React.FC<PaginationProps> = (props) => {
   }, [currentPage, count, boundaryCount, siblingCount])
 
   return (
-    <PaginationWrapperStyled data-testid="pagination">
+    <PaginationWrapperStyled data-testid="pagination" position={props.position}>
       <li>
-        <ButtonStyled data-testid="pagination-prev" onClick={handlePervious}>
+        <ButtonStyled aria-label='btn-pagination-prev' data-testid="pagination-prev" onClick={handlePervious}>
           <LeftIcon color={colors.textSecondary} />
         </ButtonStyled>
       </li>
@@ -97,7 +105,7 @@ const Pagination: React.FC<PaginationProps> = (props) => {
         </li>
       ))}
       <li>
-        <ButtonStyled data-testid="pagination-next" onClick={handleNext}>
+        <ButtonStyled aria-label='btn-pagination-next' data-testid="pagination-next" onClick={handleNext}>
           <RightIcon color={colors.textSecondary} />
         </ButtonStyled>
       </li>
@@ -105,10 +113,12 @@ const Pagination: React.FC<PaginationProps> = (props) => {
   )
 }
 
-const PaginationWrapperStyled = styled.ul`
+const PaginationWrapperStyled = styled.ul<{ position: string }>`
   display: flex;
   list-style: none;
   align-items: center;
+  justify-content: ${props => props.position};
+  padding: 0;
   li{
     display: list-item;
     text-align: -webkit-match-parent;

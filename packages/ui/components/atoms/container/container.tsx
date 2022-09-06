@@ -9,9 +9,8 @@ type ContainerProps = {
 const ContainerStyled = styled.div<ContainerProps>`
   margin: auto;
   ${props => !props.fluid && `
-  padding:0 4%;
-  @media screen and (min-width: 1500px){
-    padding: 0 62px;
+  @media screen and (min-width: 1440px){
+    max-width: 1264px;
   }`}
 
   ${props => props.fluid && `

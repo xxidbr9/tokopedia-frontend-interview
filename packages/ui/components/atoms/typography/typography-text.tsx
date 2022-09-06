@@ -11,7 +11,7 @@ export type TextProps = {
   size?: TextSizeType
   isOverline?: boolean
   children?: React.ReactNode
-}
+} & React.DetailedHTMLProps<React.HTMLAttributes<HTMLParagraphElement>, HTMLParagraphElement>
 
 const weightMap = {
   bold: 700,
@@ -42,6 +42,7 @@ const fontSizeMap: { [key in TextSizeType]: string } = {
 const TextStyled = styled.p<TextProps>`
   font-family: 'Airbnb Cereal App';
   font-style: normal;
+  margin: 0;
   font-weight: ${(props) => weightMap[props.weight as TextWeightType]};
   text-decoration: ${(props) => props.decoration};
   ${(props) => fontSizeMap[props.size as TextSizeType]}

@@ -52,4 +52,19 @@ describe("Grid", () => {
     const gridItem = getByTestId("grid-item");
     expect(gridItem).toHaveStyle("grid-column: 3/span 2;");
   });
+
+  it("should render with column 4 (mobile)", () => {
+    const Comp = () => {
+      return (
+        <Grid columns={4}>
+          <Grid.Item>
+            1
+          </Grid.Item>
+        </Grid>
+      );
+    };
+
+    const { getByTestId } = render(<Comp />);
+    const gridItem = getByTestId("grid-item");
+  })
 });

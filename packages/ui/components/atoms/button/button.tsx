@@ -63,7 +63,7 @@ ${props => !props.disabled && `
 
 const Button: React.FC<ButtonProps> = ({ suffixIcon, prefixIcon, children, isIcon, ...props }) => {
   return (
-    <ButtonStyled {...props} isIcon={isIcon} data-testid="button">
+    <ButtonStyled isIcon={isIcon} data-testid="button" {...props}>
       {!!prefixIcon && prefixIcon}
       <ButtonInnerStyled isIcon={isIcon}>
         {children}

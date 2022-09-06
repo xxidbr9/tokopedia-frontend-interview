@@ -9,3 +9,6 @@ export * from './hooks'
 
 // components
 export * from './components'
+
+// icon
+export * from './icons'
