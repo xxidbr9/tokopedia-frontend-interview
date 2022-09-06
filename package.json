@@ -12,7 +12,7 @@
         "lint": "turbo run lint",
         "format": "prettier --write \"**/*.{ts,tsx,md}\"",
         "test": "turbo run test",
-        "test:coverage": "turbo run test:coverage"
+        "test:coverage": "turbo run test:coverage --concurrency=40%"
     },
     "devDependencies": {
         "eslint-config-weboo": "*",

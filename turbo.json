@@ -3,7 +3,8 @@
     "pipeline": {
         "build": {
             "dependsOn": [
-                "^build"
+                "^build",
+                "$NODE_ENV"
             ],
             "outputs": [
                 "dist/**",
