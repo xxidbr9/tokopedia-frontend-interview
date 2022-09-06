@@ -1,0 +1,1 @@
+export * as animeSchema from './anime'
