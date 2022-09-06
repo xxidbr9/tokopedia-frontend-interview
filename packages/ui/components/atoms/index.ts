@@ -5,4 +5,5 @@ export * from './container';
 export * from './chip';
 export * from './grid';
 export * from './input';
+export * from './modal';
 export * from './typography';

@@ -12,7 +12,7 @@ type PaginationProps = {
   position: 'left' | 'center' | 'right'
   total?: number
   pageSize?: number
-}
+} 
 
 const range = (start: number, end: number) => {
   const length = end - start + 1;
@@ -20,7 +20,7 @@ const range = (start: number, end: number) => {
 };
 
 const Pagination: React.FC<PaginationProps> = (props) => {
-  const { defaultPage = 1, onChange, boundaryCount = 1, siblingCount = 1, pageSize = 1, total = 10 } = props
+  const { defaultPage = 1, onChange, boundaryCount = 1, siblingCount = 1, pageSize = 1, total = 10, position } = props
 
   const count = useMemo(() => {
     const totalPage = Math.ceil(total / pageSize)

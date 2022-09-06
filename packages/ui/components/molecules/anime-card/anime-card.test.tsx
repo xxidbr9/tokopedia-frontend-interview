@@ -88,7 +88,7 @@ describe("AnimeCard", () => {
     fireEvent.click(screen.getByTestId("trailer-btn"));
 
     expect(mockTrailerClick).toBeCalledTimes(1)
-    expect(mockTrailerClick).toHaveBeenCalledWith(dummyData_1.trailer?.id);
+    expect(mockTrailerClick).toHaveBeenCalledWith(dummyData_1.trailer);
   });
 
 

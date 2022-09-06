@@ -7,7 +7,7 @@ import { Button, Chip, Typography } from 'ui/components/atoms';
 import helpers from 'ui/helpers'
 import colors from "ui/theme/colors";
 import { useRef } from "react";
-import { AnimeMediaListItem } from 'weboo-models';
+import { AnimeMediaListItem, Trailer } from 'weboo-models';
 import { PlusIcon } from "ui/icons";
 import { cutString } from "../../../helpers/cutString";
 
@@ -27,7 +27,7 @@ type AnimeCardProps = {
 
   // event
   onBookmarkClick?: () => void
-  onTrailerClick?: (trailerId: string) => void
+  onTrailerClick?: (trailer: Trailer) => void
 }
 
 
@@ -41,7 +41,7 @@ const AnimeCard = (props: AnimeCardProps) => {
   }
 
   const handleTrailerClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    props.onTrailerClick(data.trailer.id)
+    props.onTrailerClick(data.trailer)
   }
 
   return (

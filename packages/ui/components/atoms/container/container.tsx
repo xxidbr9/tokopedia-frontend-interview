@@ -4,7 +4,7 @@ import React from 'react'
 type ContainerProps = {
   children: React.ReactNode
   fluid?: boolean
-}
+} & React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>
 
 const ContainerStyled = styled.div<ContainerProps>`
   margin: auto;

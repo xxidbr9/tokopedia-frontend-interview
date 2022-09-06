@@ -51,6 +51,7 @@ const TextStyled = styled.p<TextProps>`
   font-size: 14px; 
   line-height: 20px;`
   }
+  color: ${(props) => props.color};
 `
 
 const Text: React.FC<TextProps> = (props) => {
