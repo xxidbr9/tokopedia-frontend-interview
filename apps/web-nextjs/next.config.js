@@ -13,6 +13,12 @@ const config = {
   // amp: {
   //   validator: ampValidator
   // },
+  images: {
+    domains: [
+      "source.unsplash.com",
+      "s4.anilist.co",
+    ]
+  },
   experimental: {
     amp: {
       skipValidation: true

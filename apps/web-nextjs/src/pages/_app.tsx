@@ -5,7 +5,7 @@ import { ThemeProvider } from "ui";
 const App = ({ Component, pageProps }: { Component: any, pageProps: any }) => {
   return (
     <ThemeProvider>
-      <Component {...pageProps} />
+        <Component {...pageProps} />
     </ThemeProvider>
   );
 }
