@@ -27,7 +27,7 @@ type AnimeCardProps = {
   data: AnimeMediaListItem
 
   // event
-  onBookmarkClick?: () => void
+  onBookmarkClick?: (anime: AnimeMediaListItem) => void
   onTrailerClick?: (trailer: Trailer) => void
 }
 
@@ -38,7 +38,7 @@ const AnimeCard = (props: AnimeCardProps) => {
   const title = data.title.english || data.title.romaji;
 
   const handleBookmarkClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    props.onBookmarkClick()
+    props.onBookmarkClick(data)
   }
 
   const handleTrailerClick = (e: React.MouseEvent<HTMLButtonElement>) => {
