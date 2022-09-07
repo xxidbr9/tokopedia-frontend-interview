@@ -3,6 +3,7 @@ import { useAmp } from 'next/amp';
 import { withApollo } from '@/utils/hooks/useApollo';
 import Head from 'next/head';
 import { HomeTemplate } from '@/components/templates';
+import Meta from "@/components/meta";
 
 type HomePageProps = {
   randomTrendPage: number
@@ -13,10 +14,7 @@ function HomePage(props: HomePageProps) {
 
   return (
     <React.Fragment>
-      <Head>
-        <title>WeBoo: pusat anime terkeren</title>
-      </Head >
-
+      <Meta />
       <HomeTemplate randomTrendPage={props.randomTrendPage} page={1} />
     </React.Fragment>
   )

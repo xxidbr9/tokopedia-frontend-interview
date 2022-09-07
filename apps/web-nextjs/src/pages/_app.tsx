@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect } from "react";
+import React, { useEffect } from "react";
 import { createBreakpoint } from "react-use";
 import { ThemeProvider } from "ui";
 import { breakpoint } from "@/styles";
@@ -19,7 +19,7 @@ const MainApp = ({ Component, pageProps }: { Component: any, pageProps: any }) =
   const screenSize = useBreakpoint();
   const dispatch = useDispatch()
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     dispatch(rdxScreenAction.setScreenType(screenSize as ScreenType))
   }, [screenSize, dispatch])
 

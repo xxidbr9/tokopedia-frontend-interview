@@ -7,7 +7,7 @@ import { rdxScreenSelector } from '@/redux-state/features/screen'
 import { useSelector } from 'react-redux'
 
 
-export default (WrappedComponent) => {
+const withNavbar = (WrappedComponent) => {
 
   const HocComponents = ({ ...props }) => {
     const isMobile = useSelector(rdxScreenSelector.IsMobile)
@@ -27,3 +27,5 @@ export default (WrappedComponent) => {
 
   return HocComponents
 }
+
+export default withNavbar

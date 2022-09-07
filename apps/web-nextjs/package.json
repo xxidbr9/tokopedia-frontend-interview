@@ -3,7 +3,8 @@
     "version": "0.0.0",
     "private": true,
     "scripts": {
-        "prebuild": "rimraf .next",
+        "prebuild": "yarn clean",
+        "clean": "rimraf .next ./public/sw.js",
         "dev": "next dev",
         "build": "next build",
         "start": "next start",
@@ -20,6 +21,7 @@
         "lodash": "^4.17.21",
         "nanoid": "^4.0.0",
         "next": "12.2.5",
+        "next-pwa": "^5.6.0",
         "next-redux-wrapper": "^7.0.5",
         "nextjs-progressbar": "^0.0.14",
         "react": "18.2.0",
@@ -48,8 +50,11 @@
         "babel-plugin-react-remove-properties": "^0.3.0",
         "eslint": "7.32.0",
         "eslint-config-weboo": "*",
+        "next-compose-plugins": "^2.2.1",
+        "next-pwa": "^5.6.0",
         "next-transpile-modules": "9.0.0",
         "rimraf": "^3.0.2",
+        "terser-webpack-plugin": "^5.3.6",
         "tsconfig": "*",
         "typescript": "^4.5.3"
     }
