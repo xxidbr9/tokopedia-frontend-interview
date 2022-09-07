@@ -17,6 +17,10 @@ import NextImage from 'next/image';
 import React, { useEffect } from "react"
 import { rdxCollectionAction, rdxCollectionSelector } from "@/redux-state/features/collection"
 import { toast } from 'react-toastify'
+import Sheet, { SheetRef } from 'react-modal-sheet';
+import { useRef } from "react"
+
+
 // TODO: move this to template
 const youtubeOpts = {
   height: '480',
@@ -33,6 +37,10 @@ type HomeTemplateProps = {
 }
 
 const { Title, Text } = Typography
+
+
+
+
 const HomeTemplate = (props: HomeTemplateProps) => {
   const isAmp = useAmp()
   const { page, randomTrendPage } = props
@@ -40,10 +48,6 @@ const HomeTemplate = (props: HomeTemplateProps) => {
   const [selectedYoutubeVideo, setSelectedYoutubeVideo] = React.useState('')
 
 
-  // modal collection
-  const [isModalCollectionOpen, setIsModalCollectionOpen] = React.useState(false)
-  const [selectedAnime, setSelectedAnime] = React.useState<AnimeMediaListItem | null>(null)
-  const [isModalNewCollectionOpen, setIsModalNewCollectionOpen] = React.useState(false)
 
   const dispatch = useDispatch()
 
@@ -78,6 +82,10 @@ const HomeTemplate = (props: HomeTemplateProps) => {
 
 
   // collection start here 
+  const [isModalCollectionOpen, setIsModalCollectionOpen] = React.useState(false)
+  const [selectedAnime, setSelectedAnime] = React.useState<AnimeMediaListItem | null>(null)
+  const [isModalNewCollectionOpen, setIsModalNewCollectionOpen] = React.useState(false)
+
   const handleCollectionClick = (anime: AnimeMediaListItem) => {
     setIsModalCollectionOpen(true);
     setSelectedAnime(anime);
@@ -119,14 +127,20 @@ const HomeTemplate = (props: HomeTemplateProps) => {
     if (!!errorAddToCollection) {
       toast.error(errorAddToCollection, { onClose: () => dispatch(rdxCollectionAction.clearError()) })
     }
-  }, [errorAddToCollection])
+    () => {
+      dispatch(rdxCollectionAction.clearError())
+    }
+  }, [errorAddToCollection, dispatch])
 
   const successAddToCollection = useSelector(rdxCollectionSelector.getSuccessMessage)
   useEffect(() => {
     if (!!successAddToCollection) {
       toast.success(successAddToCollection, { onClose: () => dispatch(rdxCollectionAction.clearSuccessMessage()) })
     }
-  }, [successAddToCollection])
+    () => {
+      dispatch(rdxCollectionAction.clearSuccessMessage())
+    }
+  }, [successAddToCollection, dispatch])
   // collection end here
 
 
@@ -170,6 +184,22 @@ const HomeTemplate = (props: HomeTemplateProps) => {
               onSave={handleCreateNewCollection}
             />
           </Modal>
+        </React.Fragment>
+      )}
+
+      {isMobile && (
+        <React.Fragment>
+          <SheetCollection
+            isOpen={isModalCollectionOpen}
+            onClose={handleCollectionModalClose}
+            onCollectionClick={handleCollectionModalAdded}
+            onNewCollectionClick={handleNewCollectionInModalClicked}
+          />
+          <SheetNewCollection
+            isOpen={isModalNewCollectionOpen}
+            onClose={handleBackToCollection}
+            onSave={handleCreateNewCollection}
+          />
         </React.Fragment>
       )}
       {/* Split after that */}
@@ -217,6 +247,121 @@ const HomeTemplate = (props: HomeTemplateProps) => {
     </React.Fragment >
   );
 }
+
+
+
+// bottom sheet
+const CustomSheet = styled(Sheet)`
+.react-modal-sheet-container{
+  background-color: ${colors.surface} !important;
+}
+.react-modal-sheet-drag-indicator{
+  background-color: ${colors.onSurface} !important;
+}
+`;
+
+type SheetNewCollectionProps = {
+  isOpen: boolean;
+  onClose: () => void;
+  onSave: (collectionName: string) => void;
+}
+
+const SheetNewCollection = (props: SheetNewCollectionProps) => {
+  const [name, setName] = React.useState('')
+  const containerStyle = { padding: "12px 16px", width: "auto" }
+  const ref = useRef<SheetRef>()
+
+  return (
+    <CustomSheet
+      isOpen={props.isOpen}
+      snapPoints={[250, 0]}
+      onClose={props.onClose}
+      ref={ref}
+    >
+      <Sheet.Container>
+        <Sheet.Header style={containerStyle}>
+          <ModalHeader>
+            <button aria-label="Close button" onClick={props.onClose}>
+              <CloseSmallIcon />
+            </button>
+            <Typography.Title as="h6" style={{ textAlign: "center", margin: 0 }}>
+              Buat koleksi baru
+            </Typography.Title>
+            <div style={{ width: 24, height: 24 }} />
+          </ModalHeader>
+        </Sheet.Header>
+        <Sheet.Content disableDrag style={{ paddingBottom: ref.current?.y, padding: "0 16px 24px" }}>
+          <ModalContent style={{ rowGap: "40px" }}>
+            <Input
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Nama koleksi"
+            />
+            <Button disabled={!name} onClick={() => props.onSave(name)}>
+              Simpan
+            </Button>
+          </ModalContent>
+        </Sheet.Content>
+      </Sheet.Container>
+      <Sheet.Backdrop />
+    </CustomSheet>
+  )
+}
+
+type SheetCollectionProps = {
+  isOpen: boolean;
+  onClose: () => void;
+  onNewCollectionClick: () => void
+  onCollectionClick: (id: string) => void
+}
+
+const SheetCollection = (props: SheetCollectionProps) => {
+  const collection = useSelector(rdxCollectionSelector.getListOFCollectionWithOutMedia)
+  const handleNewClick = () => {
+    props.onNewCollectionClick()
+  }
+  const containerStyle = { padding: "12px 16px", width: "auto" }
+  const ref = useRef<SheetRef>()
+
+  return (
+    <CustomSheet
+      isOpen={props.isOpen}
+      snapPoints={[500, 0]}
+      onClose={props.onClose}
+      ref={ref}
+    >
+      <Sheet.Container>
+        <Sheet.Header style={containerStyle}>
+          <ModalHeader>
+            <button aria-label="Close button" onClick={props.onClose}>
+              <CloseSmallIcon />
+            </button>
+            <Typography.Title as="h6" style={{ textAlign: "center", margin: 0 }}>
+              Tambah ke koleksi
+            </Typography.Title>
+            <div style={{ width: 24, height: 24 }} />
+          </ModalHeader>
+        </Sheet.Header>
+        <Sheet.Content disableDrag style={{ paddingBottom: ref.current?.y, padding: "0 16px 24px" }}>
+          <ModalContent>
+            <CollectionListItem isNew onClick={handleNewClick} />
+            {collection.map((item) => (
+              <CollectionListItem
+                key={item.id}
+                id={item.id}
+                title={item.title}
+                image={item.image}
+                onClick={props.onCollectionClick}
+              />
+            ))}
+          </ModalContent>
+        </Sheet.Content>
+      </Sheet.Container>
+      <Sheet.Backdrop />
+    </CustomSheet>
+  );
+}
+
 
 type NewCollectionModalProps = { onBack: () => void, onSave: (name: string) => void }
 const NewCollectionModal = (props: NewCollectionModalProps) => {
@@ -272,6 +417,7 @@ const ModalHeader = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   button{
     background-color: transparent;
     border: none;
@@ -359,7 +505,6 @@ const CollectionModal = (props: CollectionModalProps) => {
 
   const collection = useSelector(rdxCollectionSelector.getListOFCollectionWithOutMedia)
   const handleNewClick = () => {
-    console.log("new");
     props.onNewCollectionClick()
   }
 
@@ -369,7 +514,9 @@ const CollectionModal = (props: CollectionModalProps) => {
         <button aria-label="Close button" onClick={props.onClose}>
           <CloseSmallIcon />
         </button>
-        <Typography.Title as="h6" style={{ textAlign: "center", margin: 0, }}>Koleksi Baru</Typography.Title>
+        <Typography.Title as="h6" style={{ textAlign: "center", margin: 0, }}>
+          Tambah ke koleksi
+        </Typography.Title>
         <div style={{ width: 24, height: 24 }} />
       </ModalHeader>
       <ModalContent>

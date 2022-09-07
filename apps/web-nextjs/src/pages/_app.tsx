@@ -51,7 +51,7 @@ const MainApp = ({ Component, pageProps }: { Component: any, pageProps: any }) =
         draggablePercent={60}
         toastStyle={{
           background: colors.surface,
-          ...(isMobile ? { bottom: "124px" } : {})
+          ...(isMobile ? { bottom: "100px", margin: "0 20px", zIndex: 999 } : {})
         }}
         progressStyle={{
           accentColor: colors.primary,
