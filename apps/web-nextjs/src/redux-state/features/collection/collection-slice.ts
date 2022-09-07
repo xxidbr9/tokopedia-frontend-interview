@@ -5,11 +5,11 @@ import { persistReducer } from "redux-persist";
 import storage from 'redux-persist/lib/storage'
 
 type CollectionType = {
-  id: string;
+  id?: string;
   title: string;
-  image: string;
-  createdAt: number;
-  updatedAt: number;
+  image?: string;
+  createdAt?: number;
+  updatedAt?: number;
   media: AnimeMediaListItem[];
 }
 
@@ -18,6 +18,7 @@ type RdxCollectionState = {
     [key: string]: CollectionType,
   },
   error?: string,
+  successMessage?: string,
 }
 
 const initialState: RdxCollectionState = {
@@ -34,7 +35,7 @@ const collectionSlice = createSlice({
     createCollection(state: RdxCollectionState, action: PayloadAction<Omit<CollectionType, "id">>) {
       const animeCollectionNameExist = Object.values(state.data).some((collection) => collection.title === action.payload.title);
       if (animeCollectionNameExist) {
-        state.error = "Collection name already exist";
+        state.error = `Koleksi dengan name ${action.payload.title} sudah ada !!!`;
         return;
       }
 
@@ -47,34 +48,42 @@ const collectionSlice = createSlice({
         createdAt: date,
         updatedAt: date,
       }
+      const media = action.payload.media[0];
+      const title = media.title.english || media.title.romaji || media.title.native;
+      state.successMessage = `${title} berhasil ditambahkan ke ${action.payload.title}`;
     },
 
     deleteCollection(state: RdxCollectionState, action: PayloadAction<string>) {
       delete state.data[action.payload];
+      state.successMessage = "Collection deleted";
     },
 
     updateCollection(state: RdxCollectionState, action: PayloadAction<CollectionType>) {
       const animeCollectionNameExist = Object.values(state.data).some((collection) => collection.title === action.payload.title);
       if (animeCollectionNameExist) {
-        state.error = "Collection name already exist";
+        state.error = "Koleksi dengan nama tersebut sudah ada";
         return;
       }
 
       state.data[action.payload.id] = action.payload;
+
+      state.successMessage = "Collection updated";
     },
 
     addToCollection(state: RdxCollectionState, action: PayloadAction<{ collectionId: string, media: AnimeMediaListItem }>) {
+      const { collectionId, media } = action.payload;
+      const title = media.title.english || media.title.romaji || media.title.native
+
       const animeCollectionExist = state.data[action.payload.collectionId].media.some((anime) => anime.id === action.payload.media.id);
       if (animeCollectionExist) {
-        state.error = "Anime already exist in collection"
+        state.error = `${title} sudah ada di ${state.data[collectionId].title}`;
         return state;
       }
 
-      const { collectionId, media } = action.payload;
       state.data[collectionId].media.push(media);
       state.data[collectionId].image = media.coverImage.medium;
       state.data[collectionId].updatedAt = Date.now();
-
+      state.successMessage = `${title} berhasil ditambahkan ke ${state.data[collectionId].title}`;
     },
 
     removeFromCollection(state: RdxCollectionState, action: PayloadAction<{ collectionId: string, mediaId: number }>) {
@@ -82,10 +91,16 @@ const collectionSlice = createSlice({
       state.data[collectionId].media = state.data[collectionId].media.filter(media => media.id !== mediaId);
       state.data[collectionId].image = state.data[collectionId].media[0].coverImage.medium;
       state.data[collectionId].updatedAt = Date.now();
+
+      state.successMessage = "Anime berhasil dihapus dari koleksi";
     },
 
     clearError(state: RdxCollectionState) {
       state.error = undefined;
+    },
+
+    clearSuccessMessage(state: RdxCollectionState) {
+      state.successMessage = undefined;
     }
   },
 });
@@ -96,7 +111,6 @@ const rawCollectionReducer = collectionSlice.reducer;
 const collectionPersistConfig = {
   storage,
   key: 'collection',
-  whitelist: ['collection'],
 };
 
 export const collectionReducer = persistReducer(collectionPersistConfig, rawCollectionReducer);

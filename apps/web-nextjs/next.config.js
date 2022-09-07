@@ -1,11 +1,13 @@
-// const ampValidator = require("amphtml-validator");
-
 const withTM = require("next-transpile-modules")(["ui"]);
-const withPWA = require("next-pwa")({ dest: "public" });
 const runtimeCaching = require("next-pwa/cache");
 const TerserPlugin = require("terser-webpack-plugin");
 
 const IS_DEV = process.env.NODE_ENV !== "production";
+const withPWA = require("next-pwa")({
+  dest: "public",
+  disable: IS_DEV,
+  register: true,
+});
 
 const pwaConfig = {
   pwa: {
@@ -38,6 +40,9 @@ const config = {
       skipValidation: true
     }
   },
+  compiler: {
+    removeConsole: !IS_DEV,
+  },
 
   webpack: config => {
     const newConfig = config;
@@ -62,5 +67,7 @@ const config = {
   },
   ...withPWA(pwaConfig)
 };
+
+delete config.pwa;
 
 module.exports = withTM(config);
