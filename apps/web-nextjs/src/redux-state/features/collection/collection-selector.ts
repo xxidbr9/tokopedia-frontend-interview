@@ -8,7 +8,7 @@ export const getCollectionById = createSelector([collectionState], (collection) 
 });
 
 export const getAllCollection = createSelector([collectionState], (collection) => {
-  return Object.values(collection.data);
+  return Object.values(collection.data).sort((a, b) => b.updatedAt - a.updatedAt);
 });
 
 export const isAnimeInCollection = createSelector([getAllCollection], (collection) => (animeId: number) => {
@@ -24,3 +24,6 @@ export const getListOFCollectionWithOutMedia = createSelector([getAllCollection]
   return collection.map(({ id, title, image }) => ({ id, title, image }));
 });
 
+
+export const getErrorMessage = createSelector([collectionState], (collection) => collection.error);
+export const getSuccessMessage = createSelector([collectionState], (collection) => collection.successMessage);
