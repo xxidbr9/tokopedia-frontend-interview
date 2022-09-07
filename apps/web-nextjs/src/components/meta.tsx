@@ -16,13 +16,14 @@ const Meta = () => (
 		<meta name='description' content='Pusat anime terkeren' />
 		<meta
 			name='theme-color'
-			content='#111111'
+			content={colors.surface}
 			media='(prefers-color-scheme: dark)'
 		/>
 		<meta
 			name='viewport'
 			content='width=device-width, initial-scale=1, user-scalable=0, viewport-fit=cover'
 		/>
+		<meta name='apple-mobile-web-app-status-bar-style' content="default" />
 		<link rel='apple-touch-icon' href='/icons/icon-512x512.png' />
 		<link rel='icon' type='image/png' href='/favicon.ico' />
 		<link rel='manifest' href='/manifest.webmanifest' />
