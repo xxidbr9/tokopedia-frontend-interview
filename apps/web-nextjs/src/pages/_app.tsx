@@ -21,11 +21,11 @@ const MainApp = ({ Component, pageProps }: { Component: any, pageProps: any }) =
 
   useLayoutEffect(() => {
     dispatch(rdxScreenAction.setScreenType(screenSize as ScreenType))
-  }, [screenSize])
+  }, [screenSize, dispatch])
 
-  useEffect(() =>{
+  useEffect(() => {
     setIsBrowser(true)
-  },[])
+  }, [])
 
   return (
     <ThemeProvider>

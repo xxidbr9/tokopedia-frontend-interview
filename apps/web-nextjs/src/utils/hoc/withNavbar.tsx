@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux'
 
 export default (WrappedComponent) => {
 
-  const hocComponent = ({ ...props }) => {
+  const HocComponents = ({ ...props }) => {
     const isMobile = useSelector(rdxScreenSelector.IsMobile)
     const { y } = useWindowScroll();
     const isScrolling = useMemo(() => y > 0, [y])
@@ -25,5 +25,5 @@ export default (WrappedComponent) => {
 
 
 
-  return hocComponent
+  return HocComponents
 }
