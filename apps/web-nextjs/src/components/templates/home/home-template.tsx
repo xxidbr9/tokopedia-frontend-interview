@@ -74,7 +74,15 @@ const HomeTemplate = (props: HomeTemplateProps) => {
   }
 
   if (loading) {
-    return <div>Loading..</div>
+    // center div
+    return <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '100vh'
+    }}>
+      Loading...
+    </div>
   }
 
   return (
