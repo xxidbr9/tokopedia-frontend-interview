@@ -14,9 +14,9 @@ export function slugGenerator(text: string): string {
 export default slugGenerator
 
 export const createSlugLink = (
-  path: RoutesType = ROUTE_CONSTANTS.HOME,
   title: string,
-  id: string | number
+  id: string | number,
+  path: RoutesType = ROUTE_CONSTANTS.HOME,
 ) => {
 
   let slugPath = `/${slugGenerator(title)}/${id}`

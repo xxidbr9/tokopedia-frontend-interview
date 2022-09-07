@@ -82,6 +82,11 @@ describe("AnimeCard", () => {
     expect(baseElement).toBeTruthy();
   });
 
+  it("it should render if isMobile props true", () => {
+    const { baseElement } = render(<AnimeCard data={dummyData_1} isMobile />);
+    expect(baseElement).toBeTruthy();
+  });
+
   it("mock if trailer clicked", () => {
     const mockTrailerClick = jest.fn();
     render(<AnimeCard data={dummyData_1} onTrailerClick={mockTrailerClick} />);

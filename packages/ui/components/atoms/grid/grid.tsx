@@ -6,7 +6,7 @@ type GridProps = {
   children: React.ReactNode;
   columns: 4 | 12;
   gap?: 20 | 24;
-}
+} & React.HTMLAttributes<HTMLDivElement>
 
 const GridStyled = styled.div<GridProps>`
   display: grid;

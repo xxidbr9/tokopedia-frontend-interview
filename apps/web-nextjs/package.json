@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "prebuild": "yarn clean",
-        "clean": "rimraf .next ./public/sw.js",
+        "clean": "rimraf .next ./public/sw.js ./public/workbox-* ./public/fallback-*",
         "dev": "next dev",
         "build": "next build",
         "start": "next start",
