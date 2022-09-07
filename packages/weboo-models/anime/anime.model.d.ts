@@ -31,10 +31,6 @@ export interface AnimeMediaListItem {
   trailer?: Trailer | null;
   coverImage: CoverImage;
   isAdult?: boolean;
-  // from redux
-  bookmarks?: {
-    id?: string;
-  }
 }
 
 export interface AnimeListModel {
@@ -46,12 +42,6 @@ export interface AnimeTrendModel {
   trending: number;
   averageScore: number;
   popularity: number;
-  media: {
-    id: number;
-    bannerImage: string;
-    title: Title;
-    coverImage: CoverImage;
-    description: string;
-  }
+  media: AnimeMediaListItem
 }
 
