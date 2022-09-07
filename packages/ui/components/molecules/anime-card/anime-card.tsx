@@ -19,6 +19,7 @@ type AnimeCardProps = {
   width?: number,
   imageAs?: React.ElementType<any>,
   linkAs?: React.ElementType<any>,
+  href?: string,
   layout?: LayoutType
   isMobile?: boolean
   isLast?: boolean
@@ -48,38 +49,45 @@ const AnimeCard = (props: AnimeCardProps) => {
     <CardWrapperStyled
       data-testid="anime-card"
       banner={data.bannerImage}
+      isMobile={props.isMobile}
       isLast={props.isLast}>
-      {props.isAmp ? (
-        <amp-img
-          src={data.coverImage.extraLarge}
-          width={props.width}
-          height={props.height}
-          layout={props.layout}
-          alt={title}
-          data-testid="anime-card-image-amp"
-        />
-      ) : (
-        <React.Fragment>
-          <CardImageStyled
-            as={props.imageAs}
-            layout={props.layout}
+      <LinkStyled as={props.linkAs} href={props.href}>
+        {props.isAmp ? (
+          <amp-img
             src={data.coverImage.extraLarge}
-            alt={title}
-            height={props.height}
             width={props.width}
-            data-testid="anime-card-image"
+            height={props.height}
+            layout={props.layout}
+            alt={title}
+            data-testid="anime-card-image-amp"
           />
-        </React.Fragment>
-      )}
+        ) : (
+          <React.Fragment>
+            <CardImageStyled
+              as={props.imageAs}
+              layout={props.layout}
+              src={data.coverImage.extraLarge}
+              alt={title}
+              height={props.height}
+              width={props.width}
+              data-testid="anime-card-image"
+            />
+          </React.Fragment>
+        )}
+      </LinkStyled>
       {!!title && (
-        <Text weight="medium" size="md" title={title}>
-          {helpers.cutString(`${title}`, 18)}
-        </Text>
+        <LinkStyled as={props.linkAs} href={props.href}>
+          <Text weight="medium" size="md" title={title}>
+            {helpers.cutString(`${title}`, 18)}
+          </Text>
+        </LinkStyled>
       )}
 
       {!props.isMobile && (
         <React.Fragment>
-          <div className="__overlay" />
+          <LinkStyled as={props.linkAs} href={props.href}>
+            <div className="__overlay" />
+          </LinkStyled>
           {/* TODO: split this to independent components */}
           <div className="__info-card">
             <div className="content">
@@ -118,9 +126,11 @@ const AnimeCard = (props: AnimeCardProps) => {
                     )}
                   </div>
                   <div className="button-group">
-                    <Button>
-                      Tonton
-                    </Button>
+                    <LinkStyled as={props.linkAs} href={props.href}>
+                      <Button>
+                        Tonton
+                      </Button>
+                    </LinkStyled>
                     <Button data-testid="bookmark-btn" isIcon isOpacity onClick={handleBookmarkClick}>
                       <PlusIcon />
                     </Button>
@@ -159,10 +169,19 @@ const AnimeCard = (props: AnimeCardProps) => {
 }
 
 
-const CardWrapperStyled = styled.div<{ banner?: string, isLast?: boolean }>`
+const LinkStyled = styled.a`
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+  color: inherit;
+`;
+
+const CardWrapperStyled = styled.div<{ banner?: string, isLast?: boolean, isMobile?: boolean }>`
   cursor: pointer;
   position: relative;
-  height: 19.75rem;
+  ${props => !props.isMobile && `
+    height: 19.75rem;
+  `}
   display: flex;
   width: 100%;
   flex-direction: column;
