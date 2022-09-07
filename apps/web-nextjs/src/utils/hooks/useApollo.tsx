@@ -96,7 +96,7 @@ export function withApollo(PageComponent: any, { ssr = true } = {}) {
 }
 
 // source : https://github.com/vercel/next.js/blob/canary/examples/with-apollo-and-redux
-function createApolloClient(initialState: any) {
+export function createApolloClient(initialState: any) {
   const isBrowser = typeof window !== 'undefined'
   return new ApolloClient({
     ssrMode: !isBrowser,
