@@ -31,3 +31,12 @@ yarn-error.log*
 
 # turbo
 .turbo
+
+
+# Generated via Node.js
+node_modules
+
+# Generated via next-pwa
+**/public/workbox**
+**/public/sw**
+**/public/fallback-**

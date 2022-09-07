@@ -48,6 +48,7 @@ btw all the UI is create by myself [@xxidbr9](https://github.com/xxidbr9)
 - Commitlint
 - React Testing Library
 - Apollo Graphql
+- PWA
 - More, open the project using `.` run in vscode web
 
 ## HOW TO RUN
@@ -77,3 +78,5 @@ yarn build
 
 ## TODO
 - [ ] Test all file
+- [ ] Installation Prompt show 
+- [ ] SEO
