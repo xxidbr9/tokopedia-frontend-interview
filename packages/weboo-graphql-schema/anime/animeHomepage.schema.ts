@@ -49,12 +49,24 @@ query HomeQuery($randomPage: Int) {
       popularity
       media {
         id
-        bannerImage
+        seasonYear
+        genres
+        idMal
+        isAdult
         title {
           romaji
           english
           native
           userPreferred
+        }
+        description
+        type
+        bannerImage
+        episodes
+        trailer {
+          id
+          site
+          thumbnail
         }
         coverImage {
           extraLarge
@@ -62,7 +74,6 @@ query HomeQuery($randomPage: Int) {
           medium
           color
         }
-        description
       }
     }
   }
