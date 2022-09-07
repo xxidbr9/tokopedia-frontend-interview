@@ -8,7 +8,7 @@ export type TitleProps = {
   children?: React.ReactNode
   as?: TitleAsType
   weight?: TitleWeightType
-}
+} & React.DetailedHTMLProps<React.HTMLAttributes<HTMLHeadingElement>, HTMLHeadingElement>
 
 const weightMap = {
   bold: 700,

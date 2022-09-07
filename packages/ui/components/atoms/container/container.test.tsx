@@ -13,4 +13,13 @@ describe("Container", () => {
     const container = getByTestId("container");
     expect(container).toHaveStyle("padding: 0;");
   });
+
+  it("should render in mobile mode", () => {
+    const { getByTestId } = render(<Container isMobile>OK</Container>);
+    const container = getByTestId("container");
+    expect(container).toHaveStyle(`
+      padding-left: 20px;
+      padding-right: 20px;
+    `);
+  });
 })

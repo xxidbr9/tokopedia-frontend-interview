@@ -4,6 +4,7 @@ import React from 'react'
 type ContainerProps = {
   children: React.ReactNode
   fluid?: boolean
+  isMobile?: boolean
 } & React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>
 
 const ContainerStyled = styled.div<ContainerProps>`
@@ -13,6 +14,11 @@ const ContainerStyled = styled.div<ContainerProps>`
     max-width: 1264px;
   }`}
 
+  ${props => props.isMobile && !props.fluid &&`
+    padding-left: 20px;
+    padding-right: 20px;
+  `}
+  
   ${props => props.fluid && `
   padding: 0;
   `}

@@ -12,7 +12,8 @@ type PaginationProps = {
   position: 'left' | 'center' | 'right'
   total?: number
   pageSize?: number
-} 
+  isMobile?: boolean
+}
 
 const range = (start: number, end: number) => {
   const length = end - start + 1;
@@ -20,7 +21,7 @@ const range = (start: number, end: number) => {
 };
 
 const Pagination: React.FC<PaginationProps> = (props) => {
-  const { defaultPage = 1, onChange, boundaryCount = 1, siblingCount = 1, pageSize = 1, total = 10, position } = props
+  const { defaultPage = 1, onChange, boundaryCount = 1, siblingCount = 1, pageSize = 1, total = 10, position, isMobile } = props
 
   const count = useMemo(() => {
     const totalPage = Math.ceil(total / pageSize)
@@ -81,9 +82,9 @@ const Pagination: React.FC<PaginationProps> = (props) => {
   }, [currentPage, count, boundaryCount, siblingCount])
 
   return (
-    <PaginationWrapperStyled data-testid="pagination" position={props.position}>
+    <PaginationWrapperStyled data-testid="pagination" position={position}>
       <li>
-        <ButtonStyled aria-label='btn-pagination-prev' data-testid="pagination-prev" onClick={handlePervious}>
+        <ButtonStyled isMobile={isMobile} aria-label='btn-pagination-prev' data-testid="pagination-prev" onClick={handlePervious}>
           <LeftIcon color={colors.textSecondary} />
         </ButtonStyled>
       </li>
@@ -91,6 +92,7 @@ const Pagination: React.FC<PaginationProps> = (props) => {
         <li key={page}>
           {typeof page === 'number' ? (
             <ButtonStyled
+              isMobile={isMobile}
               data-testid={`pagination-page-${page}`}
               isActive={page === currentPage}
               onClick={() => typeof page === 'number' && handlePage(page)}
@@ -105,7 +107,7 @@ const Pagination: React.FC<PaginationProps> = (props) => {
         </li>
       ))}
       <li>
-        <ButtonStyled aria-label='btn-pagination-next' data-testid="pagination-next" onClick={handleNext}>
+        <ButtonStyled isMobile={isMobile} aria-label='btn-pagination-next' data-testid="pagination-next" onClick={handleNext}>
           <RightIcon color={colors.textSecondary} />
         </ButtonStyled>
       </li>
@@ -126,6 +128,7 @@ const PaginationWrapperStyled = styled.ul<{ position: string }>`
 `
 type ButtonStyledProps = {
   isActive?: boolean
+  isMobile?: boolean
 }
 
 const ButtonStyled = styled.button<ButtonStyledProps>`
@@ -135,7 +138,7 @@ const ButtonStyled = styled.button<ButtonStyledProps>`
   border: 0px;
   justify-content: center;
   align-items: center;
-  margin: 0 4px;
+  ${props => props.isMobile ? 'margin: 0px;' : 'margin: 0 4px;'}
   min-width: 32px;
   border-radius: 4px;
   cursor: pointer;
