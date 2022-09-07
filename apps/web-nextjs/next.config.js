@@ -1,5 +1,3 @@
-// const ampValidator = require("amphtml-validator");
-
 const withTM = require("next-transpile-modules")(["ui"]);
 const runtimeCaching = require("next-pwa/cache");
 const TerserPlugin = require("terser-webpack-plugin");
