@@ -12,10 +12,15 @@
         "lint": "turbo run lint",
         "format": "prettier --write \"**/*.{ts,tsx,md}\"",
         "test": "turbo run test",
-        "test:coverage": "turbo run test:coverage --concurrency=40%"
+        "test:coverage": "turbo run test:coverage --concurrency=40%",
+        "prepare": "husky install",
+        "precommit": "commitlint"
     },
     "devDependencies": {
+        "@commitlint/cli": "^17.1.2",
+        "@commitlint/config-conventional": "^17.1.0",
         "eslint-config-weboo": "*",
+        "husky": "^8.0.1",
         "prettier": "latest",
         "turbo": "latest"
     },
