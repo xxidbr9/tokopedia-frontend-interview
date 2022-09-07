@@ -71,9 +71,11 @@ yarn build
 ## BONUS
 
 - Github action for CICD [action file](./.github/workflows)
+- Run test in PR [See Example](https://github.com/xxidbr9/tokopedia-frontend-interview/pull/3#issuecomment-1239032067)
 - Great Web performance (base on lighthouse)
   <img src="./.github/misc/lighthouse.png">
 - 100% Test Coverage (UI) Project
+
   <img src="./.github/misc/ui-test.png">
 
 ## TODO

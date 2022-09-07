@@ -17,6 +17,5 @@ jobs:
       - name: Comment Test Coverage 💬
         uses: ArtiomTr/jest-coverage-report-action@v2
         with:
-          package-manager: yarn
           working-directory: ./packages/ui
-          test-script: yarn test:coverage
+          package-manager: yarn
