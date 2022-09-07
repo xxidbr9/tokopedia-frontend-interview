@@ -12,7 +12,7 @@ import { Typography, Modal, Container, Grid, AnimeCard, Pagination, useTheme, Bu
 import helpers from "ui/helpers"
 import colors from "ui/theme/colors"
 import { animeSchema } from "weboo-graphql-schema"
-import { AnimeHomeModel, Trailer, AnimeTrendModel } from "weboo-models"
+import { AnimeHomeModel, Trailer, AnimeTrendModel, AnimeMediaListItem } from "weboo-models"
 import NextImage from 'next/image';
 import React from "react"
 
@@ -98,10 +98,12 @@ const HomeTemplate = (props: HomeTemplateProps) => {
           <Title as='h4' weight='bold'>
             Semua anime
           </Title>
-          <Grid columns={isMobile ? 4 : 12}>
+          <Grid style={{ paddingBottom: "4rem" }} columns={isMobile ? 4 : 12}>
             {data?.list.media.map((anime, index: number) => (
               <Grid.Item span={2} key={anime.id}>
                 <AnimeCard
+                  linkAs={LinkAs}
+                  href={createSlugLink(getTitle(anime.title), anime.id)}
                   isMobile={isMobile}
                   imageAs={NextImage}
                   isAmp={isAmp}
@@ -132,6 +134,13 @@ const HomeTemplate = (props: HomeTemplateProps) => {
   );
 }
 
+
+
+const getTitle = (rawTitle: AnimeMediaListItem['title']) => {
+  return rawTitle?.english || rawTitle?.romaji || rawTitle?.native || ''
+}
+
+const LinkAs = ({ href, children, ...props }) => <Link href={href} passHref><a {...props}>{children}</a></Link>
 
 
 // TODO : split this component
@@ -202,24 +211,22 @@ const Banner: React.FC<BannerProps> = (props) => {
 
   const isAmp = useAmp();
 
-  const link = createSlugLink(undefined, title, data.media.id)
+  const link = createSlugLink(title, data.media.id)
   const bannerImage = props.isMobile ? data.media.coverImage?.extraLarge : data.media.bannerImage
   return (
     <BannerWrapperStyled>
       <BannerOverlayStyled />
-      <BannerContainerStyled isMobile={props.isMobile}>
-
-
+      <BannerContainerStyled>
         <React.Fragment>
-          <Title as='h5' weight='bold'>
+          <Title as='h5' weight='bold' style={{ ...(props.isMobile ? { padding: "0 20px" } : {}) }}>
             Mungkin kamu akan suka
           </Title>
-          <BannerInfoStyled>
+          <BannerInfoStyled style={{ ...(props.isMobile ? { padding: "0 20px" } : {}) }}>
             <Title as='h1' weight='bold'>
               {title}
             </Title>
             <Grid columns={props.isMobile ? 4 : 12}>
-              <Grid.Item span={5}>
+              <Grid.Item span={props.isMobile ? 4 : 5}>
                 <Text size="sm" dangerouslySetInnerHTML={{ __html: helpers.cutString(data.media.description, 500) }} color={theme.colors.textSecondary} />
               </Grid.Item>
             </Grid>
