@@ -26,7 +26,7 @@ export const Empty: React.FC<EmptyProps> = (props) => {
   const router = useRouter()
   return (
     <CenterDiv>
-      <Image src={AnyaSmug} layout="fixed" width={500} height={500} />
+      <Image alt="anya smug" src={AnyaSmug} layout="fixed" width={500} height={500} />
       <Typography.Text style={{ color: colors.textSecondary, textAlign: "center" }}>
         {props.text || "Belum ada data"}
       </Typography.Text>
