@@ -31,20 +31,6 @@ const Pagination: React.FC<PaginationProps> = (props) => {
 
   const [currentPage, setCurrentPage] = React.useState(defaultPage)
 
-  const handlePervious = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1)
-      onChange(currentPage - 1)
-    }
-  }
-
-  const handleNext = () => {
-    if (currentPage < count) {
-      setCurrentPage(currentPage + 1)
-      onChange(currentPage + 1)
-    }
-  }
-
   const handlePage = (page: number) => {
     setCurrentPage(page)
     onChange(page)
