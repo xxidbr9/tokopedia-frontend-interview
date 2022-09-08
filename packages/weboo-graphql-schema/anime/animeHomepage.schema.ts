@@ -1,7 +1,6 @@
 import gql from 'graphql-tag';
 
 export const ANIME_HOMEPAGE_SCHEMA = gql`
-# randomPage => 1-30
 query HomeQuery($randomPage: Int) {
   list:Page(page: 1, perPage: 36) {
     pageInfo {

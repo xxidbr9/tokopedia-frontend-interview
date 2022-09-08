@@ -13,6 +13,7 @@ type PaginationProps = {
   total?: number
   pageSize?: number
   isMobile?: boolean
+  prefixHref?: string
 }
 
 const range = (start: number, end: number) => {
@@ -29,20 +30,6 @@ const Pagination: React.FC<PaginationProps> = (props) => {
   }, [total, pageSize])
 
   const [currentPage, setCurrentPage] = React.useState(defaultPage)
-
-  const handlePervious = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1)
-      onChange(currentPage - 1)
-    }
-  }
-
-  const handleNext = () => {
-    if (currentPage < count) {
-      setCurrentPage(currentPage + 1)
-      onChange(currentPage + 1)
-    }
-  }
 
   const handlePage = (page: number) => {
     setCurrentPage(page)
@@ -81,10 +68,19 @@ const Pagination: React.FC<PaginationProps> = (props) => {
     return itemList
   }, [currentPage, count, boundaryCount, siblingCount])
 
+  const prevLink = currentPage > 1 ? props.prefixHref + `page=${currentPage - 1}` : ""
+  const nextLink = currentPage < count ? props.prefixHref + `page=${currentPage + 1}` : ""
+
   return (
     <PaginationWrapperStyled data-testid="pagination" position={position}>
       <li>
-        <ButtonStyled isMobile={isMobile} aria-label='btn-pagination-prev' data-testid="pagination-prev" onClick={handlePervious}>
+        <ButtonStyled
+          href={prevLink}
+          isMobile={isMobile}
+          aria-label='btn-pagination-prev'
+          data-testid="pagination-prev"
+        // onClick={handlePervious}
+        >
           <LeftIcon color={colors.textSecondary} />
         </ButtonStyled>
       </li>
@@ -92,6 +88,7 @@ const Pagination: React.FC<PaginationProps> = (props) => {
         <li key={page}>
           {typeof page === 'number' ? (
             <ButtonStyled
+              href={props.prefixHref + `page=${page}`}
               isMobile={isMobile}
               data-testid={`pagination-page-${page}`}
               isActive={page === currentPage}
@@ -107,7 +104,13 @@ const Pagination: React.FC<PaginationProps> = (props) => {
         </li>
       ))}
       <li>
-        <ButtonStyled isMobile={isMobile} aria-label='btn-pagination-next' data-testid="pagination-next" onClick={handleNext}>
+        <ButtonStyled
+          href={nextLink}
+          isMobile={isMobile}
+          aria-label='btn-pagination-next'
+          data-testid="pagination-next"
+        // onClick={handleNext}
+        >
           <RightIcon color={colors.textSecondary} />
         </ButtonStyled>
       </li>
@@ -131,11 +134,12 @@ type ButtonStyledProps = {
   isMobile?: boolean
 }
 
-const ButtonStyled = styled.button<ButtonStyledProps>`
+const ButtonStyled = styled.a<ButtonStyledProps>`
   display: inline-flex;
   height: 32px;
   outline: 0px;
   border: 0px;
+  text-decoration: none;
   justify-content: center;
   align-items: center;
   ${props => props.isMobile ? 'margin: 0px;' : 'margin: 0 4px;'}

@@ -8,8 +8,9 @@ import helpers from 'ui/helpers'
 import colors from "ui/theme/colors";
 import { useRef } from "react";
 import { AnimeMediaListItem, Trailer } from 'weboo-models';
-import { PlusIcon } from "ui/icons";
-import { cutString } from "../../../helpers/cutString";
+import { DeleteIcon, PlusIcon } from "ui/icons";
+import { cutString } from 'ui/helpers/cutString';
+
 
 type LayoutType = "fill" | "fixed" | "intrinsic" | "responsive"
 
@@ -23,6 +24,8 @@ type AnimeCardProps = {
   layout?: LayoutType
   isMobile?: boolean
   isLast?: boolean
+  isDelete?: boolean
+
   // split this bellow to model
   data: AnimeMediaListItem
 
@@ -35,8 +38,7 @@ type AnimeCardProps = {
 const { Text } = Typography
 const AnimeCard = (props: AnimeCardProps) => {
   const { data } = props
-  const title = data.title.english || data.title.romaji;
-
+  const title = data.title.english || data.title.romaji || data.title.native || data.title.userPreferred || ""
   const handleBookmarkClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     props.onBookmarkClick(data)
   }
@@ -51,6 +53,11 @@ const AnimeCard = (props: AnimeCardProps) => {
       banner={data.bannerImage}
       isMobile={props.isMobile}
       isLast={props.isLast}>
+      {props.isDelete && props.isMobile && (
+        <DeleteButtonStyled aria-label="delete button" onClick={handleBookmarkClick}>
+          <DeleteIcon />
+        </DeleteButtonStyled>
+      )}
       <LinkStyled as={props.linkAs} href={props.href}>
         {props.isAmp ? (
           <amp-img
@@ -132,7 +139,7 @@ const AnimeCard = (props: AnimeCardProps) => {
                       </Button>
                     </LinkStyled>
                     <Button data-testid="bookmark-btn" isIcon isOpacity onClick={handleBookmarkClick}>
-                      <PlusIcon />
+                      {props.isDelete ? <DeleteIcon /> : <PlusIcon />}
                     </Button>
                   </div>
                 </div>
@@ -140,10 +147,18 @@ const AnimeCard = (props: AnimeCardProps) => {
                   <Text weight="bold">
                     {title}
                   </Text>
-                  <div>
-                    <Text size="xs">
-                      {data.isAdult && "18+"}
-                    </Text>
+                  <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
+                    {data.isAdult
+                      && (
+                        <>
+                          <Text size="xs">
+                            18+
+                          </Text>
+                          <div style={{ margin: "0 4px", color: colors.textSecondary }} >
+                            ∙
+                          </div>
+                        </>
+                      )}
                     <Text size="xs">
                       {data.seasonYear}
                     </Text>
@@ -157,14 +172,15 @@ const AnimeCard = (props: AnimeCardProps) => {
                   </div>
                 </div>
                 <div className="bottom-content">
-                  <Text size="xs" style={{ color: colors.textSecondary }} dangerouslySetInnerHTML={{ __html: cutString(data.description, 200) }} />
+                  <Text size="xs" style={{ color: colors.textSecondary }} dangerouslySetInnerHTML={{ __html: cutString(data.description || "", 200) }} />
                 </div>
               </div>
             </div>
           </div>
         </React.Fragment>
-      )}
-    </CardWrapperStyled>
+      )
+      }
+    </CardWrapperStyled >
   )
 }
 
@@ -186,7 +202,10 @@ const CardWrapperStyled = styled.div<{ banner?: string, isLast?: boolean, isMobi
   width: 100%;
   flex-direction: column;
   row-gap: 12px;
-  
+  ${props => props.isMobile && `
+  border-radius: 12px 12px 0 0;
+  overflow: hidden;
+  `}
   amp-img{
     height: 88.61%; // (280 / 316) * 100
     object-fit: cover;
@@ -327,5 +346,19 @@ const CardImageStyled = styled.img<{ layout?: LayoutType }>`
   width: 100%;
   border-radius: 12px;
 `;
+
+const DeleteButtonStyled = styled.button`
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: ${colors.danger};
+  outline: none;
+  border: none;
+  padding: 8px;
+  border-radius: 0 0 0 12px;
+  z-index: 10;
+  margin: 0;
+`;
+
 
 export default AnimeCard

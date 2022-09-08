@@ -52,4 +52,17 @@ describe("Button", () => {
     const button = getByTestId("button");
     expect(button).toHaveStyle(`background: ${colors.onSurface}`);
   });
-})
+
+  it("should render with variant danger", () => {
+    const { getByTestId } = render(<Button variant="danger">Button</Button>);
+    const button = getByTestId("button");
+    expect(button).toHaveStyle(`background: ${colors.danger}`);
+  });
+
+  it("should render with variant link", () => {
+    const { getByTestId } = render(<Button variant="link">Button</Button>);
+    const button = getByTestId("button");
+    expect(button).toHaveStyle(`background: transparent`);
+  });
+
+});

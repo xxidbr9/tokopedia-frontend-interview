@@ -1,8 +1,8 @@
 export interface Title {
-  romaji: string;
-  english: string;
-  native: string;
-  userPreferred: string;
+  romaji: string | null;
+  english: string | null;
+  native: string | null;
+  userPreferred: string | null;
 }
 
 export interface CoverImage {
@@ -24,7 +24,7 @@ export interface AnimeMediaListItem {
   genres: string[];
   idMal: number;
   title: Title;
-  description: string;
+  description: string | null;
   type: string;
   bannerImage: string;
   episodes: number;
