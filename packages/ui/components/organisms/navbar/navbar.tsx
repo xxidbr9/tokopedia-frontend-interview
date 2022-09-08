@@ -58,9 +58,9 @@ const BrandWrapper = styled.a`
 `
 
 const Navbar: React.FC<NavbarProps> = ({ isMobile, homeHref, isScrolling, linkAs, collectionHref, ...props }) => {
-  const Link = linkAs || 'a'
-  const ChildLink = linkAs === 'a' ? 'div' : 'div'
-  
+  const Link = linkAs ?? 'a'
+  const ChildLink = Link !== 'a' ? 'a' : 'div'
+    
   return (
     <NavbarWrapperStyled isMobile={isMobile} isScrolling={isScrolling} {...props}>
       <Container isMobile={isMobile}>
