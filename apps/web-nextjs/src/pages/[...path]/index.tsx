@@ -1,4 +1,5 @@
 import Meta from '@/components/meta';
+import DetailTemplate from '@/components/templates/detail';
 import { createApolloClient } from '@/utils/hooks/useApollo';
 import { GetServerSideProps } from 'next';
 import React from 'react';
@@ -15,9 +16,7 @@ const DetailPage = (props: DetailPageProps) => {
   return (
     <React.Fragment>
       <Meta title={title} description={props.data.description} />
-      <pre>
-        {JSON.stringify(props.data, null, 2)}
-      </pre>
+      <DetailTemplate data={props.data} />
     </React.Fragment>
   );
 }
@@ -31,7 +30,7 @@ export const getServerSideProps: GetServerSideProps<DetailPageProps> = async (ct
       notFound: true
     }
   }
-  
+
   const id = path[path.length - 1];
   const { data, error } = await client.query<AnimeDetailModel, { id: any }>({
     query: animeSchema.ANIME_DETAIL_SCHEMA,
