@@ -20,4 +20,10 @@ describe("Navbar", () => {
     const navbar = getByTestId("navbar");
     expect(navbar).toBeInTheDocument();
   });
+
+  it("should render when have props linkAs", () => {
+    const { getByTestId } = render(<Navbar data-testid="navbar" linkAs="a" />);
+    const navbar = getByTestId("navbar");
+    expect(navbar).toBeInTheDocument();
+  })
 })

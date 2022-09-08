@@ -8,6 +8,7 @@ type NavbarProps = {
   isMobile?: boolean
   linkAs?: React.ElementType<any>
   collectionHref?: string
+  homeHref?: string
 }
 
 const NavbarWrapperStyled = styled.nav<NavbarProps>`
@@ -49,19 +50,23 @@ const CollectionLinkStyled = styled.a`
   }
 `;
 
-const BrandWrapper = styled.div`
+const BrandWrapper = styled.a`
   display: flex;
   align-items: center;
   column-gap: 12px;
+  text-decoration: none;
 `
 
-const Navbar: React.FC<NavbarProps> = ({ isMobile, isScrolling, linkAs, collectionHref, ...props }) => {
+const Navbar: React.FC<NavbarProps> = ({ isMobile, homeHref, isScrolling, linkAs, collectionHref, ...props }) => {
+  const Link = linkAs || 'a'
+  const ChildLink = linkAs === 'a' ? 'div' : 'div'
+  
   return (
     <NavbarWrapperStyled isMobile={isMobile} isScrolling={isScrolling} {...props}>
       <Container isMobile={isMobile}>
         <NavItemStyled>
           <LeftNavStyled>
-            <BrandWrapper>
+            <BrandWrapper href={homeHref} as={(p) => <Link href={homeHref}><ChildLink {...p} /></Link>}>
               <Brand isLogo height={44} width={40} />
               {!isMobile && (
                 <Typography.Title as="h5" weight='bold' style={{ color: colors.primary, margin: 0 }}>
@@ -80,3 +85,7 @@ const Navbar: React.FC<NavbarProps> = ({ isMobile, isScrolling, linkAs, collecti
 }
 
 export default Navbar
+
+const LinkStyled = styled.a`
+  
+`;
