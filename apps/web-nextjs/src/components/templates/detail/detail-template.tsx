@@ -149,7 +149,7 @@ const AnimeEpisodes = (props: AnimeEpisodesProps) => {
       <Grid columns={isMobile ? 4 : 12} style={{ rowGap: "40px" }}>
         {props.data.map((item, index) => (
           <Grid.Item span={isMobile ? 4 : 3} key={index}>
-            <EpisodeWrapper href={item.site}>
+            <EpisodeWrapper href={item.site} target={"_blank"}>
               <Image alt={`${props.title}, ${item.title}`} src={item.thumbnail} layout="responsive" objectFit='cover' width={318} height={180} />
               <Typography.Text weight='medium'>
                 {item.title}
