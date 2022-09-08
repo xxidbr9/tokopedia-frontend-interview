@@ -25,6 +25,7 @@ query ListAnime($page:Int, $perPage:Int,$id_not: Int, $genre_in: [String], $sear
       type
       bannerImage
       episodes
+      isAdult
       trailer {
         id
         site
