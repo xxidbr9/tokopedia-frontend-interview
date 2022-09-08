@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 
 export const ANIME_LIST_SCHEMA = gql`
 query ListAnime($page:Int, $perPage:Int,$id_not: Int, $genre_in: [String], $search:String) {
-  Page(page: $page, perPage: $perPage) {
+  list:Page(page: $page, perPage: $perPage) {
     pageInfo {
       total
       perPage
@@ -25,6 +25,7 @@ query ListAnime($page:Int, $perPage:Int,$id_not: Int, $genre_in: [String], $sear
       type
       bannerImage
       episodes
+      isAdult
       trailer {
         id
         site

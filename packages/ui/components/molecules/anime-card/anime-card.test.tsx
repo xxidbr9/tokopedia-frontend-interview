@@ -66,6 +66,36 @@ const dummyData_2: AnimeMediaListItem = {
   }
 };
 
+const dummyData_3: AnimeMediaListItem = {
+  "id": 5,
+  "seasonYear": 2001,
+  "genres": [
+    "Action",
+    "Drama",
+    "Mystery",
+    "Sci-Fi"
+  ],
+  "idMal": 5,
+  "title": {
+    "romaji": null,
+    "english": null,
+    "native": null,
+    "userPreferred": null
+  },
+  "description": null,
+  "type": "ANIME",
+  "bannerImage": "https://s4.anilist.co/file/anilistcdn/media/anime/banner/5-VOcSZFepDDhm.jpg",
+  "episodes": 1,
+  "trailer": null,
+  "coverImage": {
+    "extraLarge": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx5-NozHwXWdNLCz.jpg",
+    "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx5-NozHwXWdNLCz.jpg",
+    "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx5-NozHwXWdNLCz.jpg",
+    "color": "#f13500"
+  }
+};
+
+
 describe("AnimeCard", () => {
   it("should render successfully", () => {
     const { baseElement } = render(<AnimeCard data={dummyData_1} />);
@@ -74,6 +104,11 @@ describe("AnimeCard", () => {
 
   it("should render successfully if there is no english title", () => {
     const { baseElement } = render(<AnimeCard data={dummyData_2} isLast />);
+    expect(baseElement).toBeTruthy();
+  });
+
+  it("should render successfully if there is no title and description", () => {
+    const { baseElement } = render(<AnimeCard data={dummyData_3} />);
     expect(baseElement).toBeTruthy();
   });
 
@@ -105,4 +140,15 @@ describe("AnimeCard", () => {
     expect(mockBookmarkClick).toBeCalledTimes(1)
   });
 
-})
+  it("it have isDelete props", () => {
+    const { baseElement } = render(<AnimeCard data={dummyData_1} isDelete />);
+    expect(baseElement).toBeTruthy();
+  });
+
+  it("it have isDelete and isMobile props", () => {
+    const { baseElement } = render(<AnimeCard data={dummyData_1} isDelete isMobile />);
+    expect(baseElement).toBeTruthy();
+  });
+
+
+});

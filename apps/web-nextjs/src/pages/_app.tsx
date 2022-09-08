@@ -49,6 +49,7 @@ const MainApp = ({ Component, pageProps }: { Component: any, pageProps: any }) =
         draggable
         pauseOnHover
         draggablePercent={60}
+        draggableDirection="y"
         toastStyle={{
           background: colors.surface,
           ...(isMobile ? { bottom: "100px", margin: "0 20px", zIndex: 999 } : {})

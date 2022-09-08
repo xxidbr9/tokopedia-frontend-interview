@@ -6,7 +6,7 @@ const IS_DEV = process.env.NODE_ENV !== "production";
 const withPWA = require("next-pwa")({
   dest: "public",
   disable: IS_DEV,
-  register: true,
+  register: true
 });
 
 const pwaConfig = {
@@ -16,7 +16,7 @@ const pwaConfig = {
     dest: "./public",
     runtimeCaching,
     swSrc: "./public/worker-service.js",
-    buildExcludes: [/middleware-manifest\.json$/],
+    buildExcludes: [/middleware-manifest\.json$/, /_buildManifest*/],
     importScripts: [
       "https://storage.googleapis.com/workbox-cdn/releases/6.4.1/workbox-sw.js"
     ]
@@ -41,7 +41,7 @@ const config = {
     }
   },
   compiler: {
-    removeConsole: !IS_DEV,
+    removeConsole: !IS_DEV
   },
 
   webpack: config => {
