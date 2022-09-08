@@ -10,7 +10,7 @@ query ListAnime($page:Int, $perPage:Int,$id_not: Int, $genre_in: [String], $sear
       lastPage
       hasNextPage
     }
-    media(type: ANIME, genre_in: $genre_in, id_not:$id_not, search:$search) {
+    media(type: ANIME, genre_in: $genre_in, id_not:$id_not, search:$search, sort:POPULARITY_DESC) {
       id
       seasonYear
       genres
