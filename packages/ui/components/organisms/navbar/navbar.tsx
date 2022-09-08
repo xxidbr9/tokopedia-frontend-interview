@@ -66,7 +66,7 @@ const Navbar: React.FC<NavbarProps> = ({ isMobile, homeHref, isScrolling, linkAs
       <Container isMobile={isMobile}>
         <NavItemStyled>
           <LeftNavStyled>
-            <BrandWrapper href={homeHref} as={(p) => <Link href={homeHref}><ChildLink {...p} /></Link>}>
+            <BrandWrapper rel='home' href={homeHref} as={(p) => <Link href={homeHref}><ChildLink {...p} /></Link>}>
               <Brand isLogo height={44} width={40} />
               {!isMobile && (
                 <Typography.Title as="h5" weight='bold' style={{ color: colors.primary, margin: 0 }}>

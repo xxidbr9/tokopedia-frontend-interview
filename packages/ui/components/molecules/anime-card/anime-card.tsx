@@ -39,6 +39,9 @@ const { Text } = Typography
 const AnimeCard = (props: AnimeCardProps) => {
   const { data } = props
   const title = data.title.english || data.title.romaji || data.title.native || data.title.userPreferred || ""
+  const isHaveBanner = data.bannerImage !== null
+  const banner = isHaveBanner ? data.bannerImage : data.coverImage.extraLarge || data.coverImage.large || data.coverImage.medium || ""
+
   const handleBookmarkClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     props.onBookmarkClick(data)
   }
@@ -50,7 +53,7 @@ const AnimeCard = (props: AnimeCardProps) => {
   return (
     <CardWrapperStyled
       data-testid="anime-card"
-      banner={data.bannerImage}
+      banner={banner}
       isMobile={props.isMobile}
       isLast={props.isLast}>
       {props.isDelete && props.isMobile && (
