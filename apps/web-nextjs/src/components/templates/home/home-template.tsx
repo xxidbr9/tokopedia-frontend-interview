@@ -19,7 +19,7 @@ import { rdxCollectionAction, rdxCollectionSelector } from "@/redux-state/featur
 import { toast } from 'react-toastify'
 import Sheet, { SheetRef } from 'react-modal-sheet';
 import { useRef } from "react"
-
+import queryString from 'query-string'
 
 // TODO: move this to template
 const youtubeOpts = {
@@ -38,16 +38,11 @@ type HomeTemplateProps = {
 
 const { Title, Text } = Typography
 
-
-
-
 const HomeTemplate = (props: HomeTemplateProps) => {
   const isAmp = useAmp()
   const { page, randomTrendPage } = props
   const [isModalYoutubeOpen, setIsModalYoutubeOpen] = React.useState(false)
   const [selectedYoutubeVideo, setSelectedYoutubeVideo] = React.useState('')
-
-
 
   const dispatch = useDispatch()
 
@@ -56,9 +51,8 @@ const HomeTemplate = (props: HomeTemplateProps) => {
 
   const router = useRouter();
 
-  const { data, loading, error } = useQuery<AnimeHomeModel, { page: number, perPage: number, randomPage?: number }>(animeSchema.ANIME_HOMEPAGE_SCHEMA, {
+  const { data, loading, error, fetchMore } = useQuery<AnimeHomeModel, {perPage: number, randomPage?: number }>(animeSchema.ANIME_HOMEPAGE_SCHEMA, {
     variables: {
-      page,
       perPage: 36,
       randomPage: randomTrendPage
     }
@@ -77,7 +71,7 @@ const HomeTemplate = (props: HomeTemplateProps) => {
   }
 
   const handlePageChange = (page: number) => {
-    router.push(`${ROUTE_CONSTANTS.SEARCH}/?page=${page}`)
+    // router.push(`${ROUTE_CONSTANTS.SEARCH}/?page=${page}`)
   }
 
 
@@ -240,6 +234,7 @@ const HomeTemplate = (props: HomeTemplateProps) => {
             position={isMobile ? "center" : "right"}
             total={data?.list.pageInfo.total}
             pageSize={36}
+            prefixHref={`${ROUTE_CONSTANTS.SEARCH}/?`}
           />
         </Container>
       </section>
@@ -266,7 +261,7 @@ type SheetNewCollectionProps = {
   onSave: (collectionName: string) => void;
 }
 
-const SheetNewCollection = (props: SheetNewCollectionProps) => {
+export const SheetNewCollection = (props: SheetNewCollectionProps) => {
   const [name, setName] = React.useState('')
   const containerStyle = { padding: "12px 16px", width: "auto" }
   const ref = useRef<SheetRef>()
@@ -315,7 +310,7 @@ type SheetCollectionProps = {
   onCollectionClick: (id: string) => void
 }
 
-const SheetCollection = (props: SheetCollectionProps) => {
+export const SheetCollection = (props: SheetCollectionProps) => {
   const collection = useSelector(rdxCollectionSelector.getListOFCollectionWithOutMedia)
   const handleNewClick = () => {
     props.onNewCollectionClick()
@@ -364,7 +359,7 @@ const SheetCollection = (props: SheetCollectionProps) => {
 
 
 type NewCollectionModalProps = { onBack: () => void, onSave: (name: string) => void }
-const NewCollectionModal = (props: NewCollectionModalProps) => {
+export const NewCollectionModal = (props: NewCollectionModalProps) => {
   const [name, setName] = React.useState('')
 
   return (
@@ -462,7 +457,7 @@ const CollectionListWrapperStyled = styled.button`
 
 
 
-const CollectionListItem = (props: CollectionListItemProps) => {
+export const CollectionListItem = (props: CollectionListItemProps) => {
 
   const handleClick = () => {
     props.onClick(props.id)
@@ -501,7 +496,7 @@ const CollectionListItem = (props: CollectionListItemProps) => {
   )
 }
 
-const CollectionModal = (props: CollectionModalProps) => {
+export const CollectionModal = (props: CollectionModalProps) => {
 
   const collection = useSelector(rdxCollectionSelector.getListOFCollectionWithOutMedia)
   const handleNewClick = () => {
@@ -536,11 +531,11 @@ const CollectionModal = (props: CollectionModalProps) => {
 }
 
 
-const getTitle = (rawTitle: AnimeMediaListItem['title']) => {
+export const getTitle = (rawTitle: AnimeMediaListItem['title']) => {
   return rawTitle?.english || rawTitle?.romaji || rawTitle?.native || ''
 }
 
-const LinkAs = ({ href, children, ...props }) => <Link href={href} passHref><a {...props}>{children}</a></Link>
+export const LinkAs = ({ href, children, ...props }) => <Link href={href} passHref><a {...props}>{children}</a></Link>
 
 
 // TODO : split this component
