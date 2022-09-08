@@ -1,22 +1,20 @@
 import { rdxCollectionAction, rdxCollectionSelector } from "@/redux-state/features/collection"
 import { rdxScreenSelector } from "@/redux-state/features/screen"
-import { ROUTE_CONSTANTS } from "@/utils/constants"
 import { createSlugLink } from "@/utils/helpers"
-import { useQuery } from "@apollo/client"
-import { useAmp } from "next/amp"
 import React, { useEffect, useRef } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { toast } from "react-toastify"
 import YouTube from "react-youtube"
-import { Modal, Container, Typography, Grid, AnimeCard, Pagination, Button, CloseSmallIcon, Input, EditIcon } from "ui"
-import { animeSchema } from "weboo-graphql-schema"
-import { AnimeHomeModel, Trailer, AnimeMediaListItem, CollectionType } from "weboo-models"
-import { CollectionModal, NewCollectionModal, SheetCollection, SheetNewCollection, LinkAs, getTitle, ModalContent, ModalHeader, ModalWrapper, CustomSheet } from "../home/home-template"
+import { Modal, Container, Typography, Grid, AnimeCard, Button, CloseSmallIcon, Input, EditIcon } from "ui"
+import { Trailer, AnimeMediaListItem, CollectionType } from "weboo-models"
+import { LinkAs, getTitle, ModalContent, ModalHeader, ModalWrapper, CustomSheet } from "../home/home-template"
 import NextImage from 'next/image';
 import Title from "ui/components/atoms/typography/typography-title"
 import colors from "ui/theme/colors"
 import Sheet, { SheetRef } from 'react-modal-sheet';
 import styled from "@emotion/styled"
+import { Empty } from "@/components/empty"
+
 
 const youtubeOpts = {
   height: '480',
@@ -29,6 +27,8 @@ const youtubeOpts = {
 type CollectionTemplateProps = {
 
 }
+
+
 
 const CollectionTemplate = (props: CollectionTemplateProps) => {
 
@@ -204,6 +204,11 @@ const CollectionTemplate = (props: CollectionTemplateProps) => {
         </React.Fragment>
       )}
       {/* Split after that */}
+      {/* Collection is empty */}
+      {!collections.length && (
+        <Empty text="Belum ada anime dikoleksi !!!" />
+      )}
+
       {collections.map((collection, index) => (
         <section key={collection.id} style={{ ...styleSection, ...(!!index && { padding: "20px 0" }) }}>
           <Container isMobile={isMobile}>

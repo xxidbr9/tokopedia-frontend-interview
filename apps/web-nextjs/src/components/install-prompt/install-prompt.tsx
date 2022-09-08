@@ -31,7 +31,7 @@ const InstallPrompt = (props: InstallPromptProps) => {
             </DescriptionStyled>
           </TextWrapper>
           <ButtonWrapper>
-            <Button variant='link' style={{color:colors.textSecondary}} onClick={props.onDismiss}>Tutup</Button>
+            <Button variant='link' style={{color:colors.textSecondary}} onClick={props.onDismiss}>Lain waktu</Button>
             <Button onClick={props.onInstall}>Install</Button>
           </ButtonWrapper>
         </WrapperStyled>

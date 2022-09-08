@@ -17,7 +17,13 @@ const withNavbar = (WrappedComponent) => {
 
 
       <React.Fragment>
-        <Navbar linkAs={Link} collectionHref={ROUTE_CONSTANTS.COLLECTION} isMobile={isMobile} isScrolling={isScrolling} />
+        <Navbar
+          linkAs={Link}
+          collectionHref={ROUTE_CONSTANTS.COLLECTION}
+          isMobile={isMobile}
+          isScrolling={isScrolling}
+          homeHref={ROUTE_CONSTANTS.HOME}
+        />
         <WrappedComponent {...props} />
       </React.Fragment>
     )
