@@ -10,7 +10,7 @@ query HomeQuery($randomPage: Int) {
       lastPage
       hasNextPage
     }
-    media(type: ANIME) {
+    media(type: ANIME, sort: POPULARITY_DESC) {
       id
       seasonYear
       genres
