@@ -41,7 +41,7 @@ query HomeQuery($randomPage: Int) {
   }
 
   trend:Page(page: $randomPage, perPage: 1) {
-    mediaTrends(trending_lesser: 20) {
+    mediaTrends(trending_greater: 20) {
       mediaId
       trending
       averageScore
