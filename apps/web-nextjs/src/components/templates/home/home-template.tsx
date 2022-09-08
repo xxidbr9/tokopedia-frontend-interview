@@ -606,7 +606,9 @@ const Banner: React.FC<BannerProps> = (props) => {
   const isAmp = useAmp();
 
   const link = createSlugLink(title, data.media.id)
-  const bannerImage = props.isMobile ? data.media.coverImage?.extraLarge : data.media.bannerImage
+  const banner = data.media.bannerImage || data.media.coverImage?.large || data.media.coverImage?.medium || data.media.coverImage?.extraLarge || data.media.coverImage?.large || data.media.coverImage?.medium || data.media.coverImage?.extraLarge
+  const bannerImage = props.isMobile ? data.media.coverImage?.extraLarge : banner
+
   return (
     <BannerWrapperStyled>
       <BannerOverlayStyled />
