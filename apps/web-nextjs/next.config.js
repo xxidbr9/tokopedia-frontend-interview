@@ -12,7 +12,7 @@ const withPWA = require("next-pwa")({
 const pwaConfig = {
   pwa: {
     sw: "/sw.js",
-    disable: !IS_DEV,
+    disable: IS_DEV,
     dest: "./public",
     runtimeCaching,
     swSrc: "./public/worker-service.js",
@@ -33,7 +33,7 @@ const config = {
   //   validator: ampValidator
   // },
   images: {
-    domains: ["source.unsplash.com", "s4.anilist.co"]
+    domains: ["source.unsplash.com", "s4.anilist.co", "img1.ak.crunchyroll.com"]
   },
   experimental: {
     amp: {

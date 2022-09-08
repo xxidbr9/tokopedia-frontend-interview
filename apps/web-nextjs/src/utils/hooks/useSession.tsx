@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 
-export const useSession = (key: string, initialValue: any) => {
+export const useSession = <T extends any>(key: string, initialValue: T) => {
   const [storedValue, setStoredValue] = useState(() => {
     try {
       const item = window.sessionStorage.getItem(key);

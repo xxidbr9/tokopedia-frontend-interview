@@ -27,7 +27,7 @@ const Meta = (props: MetaProps) => (
 		/>
 		<meta
 			name='viewport'
-			content='width=device-width, initial-scale=1, user-scalable=0, viewport-fit=cover'
+			content='width=device-width, initial-scale=1, user-scalable=0, initial-scale=1.0, minimum-scale=0.5, maximum-scale=3.0 viewport-fit=cover'
 		/>
 		<meta name='apple-mobile-web-app-status-bar-style' content="default" />
 		<link rel='apple-touch-icon' href='/icons/icon-512x512.png' />
