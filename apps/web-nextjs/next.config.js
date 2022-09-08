@@ -12,7 +12,7 @@ const withPWA = require("next-pwa")({
 const pwaConfig = {
   pwa: {
     sw: "/sw.js",
-    disable: IS_DEV,
+    disable: !IS_DEV,
     dest: "./public",
     runtimeCaching,
     swSrc: "./public/worker-service.js",
