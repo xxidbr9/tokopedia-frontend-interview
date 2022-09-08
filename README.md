@@ -20,8 +20,8 @@ This is a project example of an anime website that from [API](https://anilist.gi
 ## Goals
 
 - [X] Home Page
-- [ ] Pagination
-- [ ] User Collection
+- [X] Pagination
+- [X] User Collection
 - [ ] Detail Page
 
 # Design
@@ -80,5 +80,6 @@ yarn build
 
 ## TODO
 - [ ] Test all file
-- [ ] Installation Prompt show 
+ - [X] UI 
+- [X] Installation Prompt show 
 - [ ] SEO
