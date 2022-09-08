@@ -1,8 +1,9 @@
+import { Empty } from '@/components/empty'
 import React from 'react'
 
 const Fallback = () => {
   return (
-    <div>You are Offline</div>
+    <Empty withButton={false} text="Kamu sedang offline !!!"/>
   )
 }
 

@@ -33,7 +33,7 @@ const config = {
   //   validator: ampValidator
   // },
   images: {
-    domains: ["source.unsplash.com", "s4.anilist.co"]
+    domains: ["source.unsplash.com", "s4.anilist.co", "img1.ak.crunchyroll.com"]
   },
   experimental: {
     amp: {

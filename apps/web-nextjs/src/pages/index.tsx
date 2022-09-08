@@ -21,7 +21,7 @@ function HomePage(props: HomePageProps) {
 }
 
 HomePage.getInitialProps = async () => {
-  const randomTrendPage = Math.floor(Math.random() * 10) + 1 | 1
+  const randomTrendPage = Math.floor(Math.random() * 30) + 1 | 1
   return { randomTrendPage }
 }
 

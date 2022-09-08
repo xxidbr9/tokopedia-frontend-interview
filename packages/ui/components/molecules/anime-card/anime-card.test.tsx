@@ -37,6 +37,7 @@ const dummyData_1: AnimeMediaListItem = {
   }
 };
 
+
 const dummyData_2: AnimeMediaListItem = {
   "id": 5,
   "seasonYear": 2001,
@@ -96,6 +97,36 @@ const dummyData_3: AnimeMediaListItem = {
 };
 
 
+const dummyData_4: AnimeMediaListItem = {
+  ...dummyData_3,
+  "bannerImage": null,
+}
+
+const dummyData_5: AnimeMediaListItem = {
+  ...dummyData_4,
+  "coverImage": {
+    ...dummyData_4.coverImage,
+    extraLarge: null,
+  },
+}
+
+const dummyData_6: AnimeMediaListItem = {
+  ...dummyData_5,
+  "coverImage": {
+    ...dummyData_5.coverImage,
+    large: null,
+  },
+}
+
+const dummyData_7: AnimeMediaListItem = {
+  ...dummyData_6,
+  "coverImage": {
+    ...dummyData_6.coverImage,
+    medium: null,
+  },
+}
+
+
 describe("AnimeCard", () => {
   it("should render successfully", () => {
     const { baseElement } = render(<AnimeCard data={dummyData_1} />);
@@ -150,5 +181,24 @@ describe("AnimeCard", () => {
     expect(baseElement).toBeTruthy();
   });
 
+  it("it don't have bannerImage", () => {
+    const { baseElement } = render(<AnimeCard data={dummyData_4} isDelete isMobile />);
+    expect(baseElement).toBeTruthy();
+  })
+
+  it("it don't have bannerImage and extra large coverImage", () => {
+    const { baseElement } = render(<AnimeCard data={dummyData_5} />);
+    expect(baseElement).toBeTruthy();
+  })
+
+  it("it don't have bannerImage, extra large coverImage and large", () => {
+    const { baseElement } = render(<AnimeCard data={dummyData_6} />);
+    expect(baseElement).toBeTruthy();
+  })
+
+  it("it don't have bannerImage, extra large coverImage, large, and medium ", () => {
+    const { baseElement } = render(<AnimeCard data={dummyData_7} />);
+    expect(baseElement).toBeTruthy();
+  })
 
 });

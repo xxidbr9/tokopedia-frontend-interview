@@ -6,10 +6,10 @@ export interface Title {
 }
 
 export interface CoverImage {
-  extraLarge: string;
-  large: string;
-  medium: string;
-  color: string;
+  extraLarge: string | null;
+  large: string | null;
+  medium: string | null;
+  color: string | null;
 }
 
 export interface Trailer {
@@ -26,7 +26,7 @@ export interface AnimeMediaListItem {
   title: Title;
   description: string | null;
   type: string;
-  bannerImage: string;
+  bannerImage: string | null;
   episodes: number;
   trailer?: Trailer | null;
   coverImage: CoverImage;
