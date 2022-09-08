@@ -93,7 +93,8 @@ const Pagination: React.FC<PaginationProps> = (props) => {
           isMobile={isMobile}
           aria-label='btn-pagination-prev'
           data-testid="pagination-prev"
-          onClick={handlePervious}>
+        // onClick={handlePervious}
+        >
           <LeftIcon color={colors.textSecondary} />
         </ButtonStyled>
       </li>
@@ -122,7 +123,8 @@ const Pagination: React.FC<PaginationProps> = (props) => {
           isMobile={isMobile}
           aria-label='btn-pagination-next'
           data-testid="pagination-next"
-          onClick={handleNext}>
+        // onClick={handleNext}
+        >
           <RightIcon color={colors.textSecondary} />
         </ButtonStyled>
       </li>
