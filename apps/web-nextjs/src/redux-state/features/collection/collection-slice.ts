@@ -1,17 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { nanoid } from "nanoid";
-import { AnimeMediaListItem } from "weboo-models";
+import { AnimeMediaListItem, CollectionType } from "weboo-models";
 import { persistReducer } from "redux-persist";
 import storage from 'redux-persist/lib/storage'
 
-type CollectionType = {
-  id?: string;
-  title: string;
-  image?: string;
-  createdAt?: number;
-  updatedAt?: number;
-  media: AnimeMediaListItem[];
-}
+
 
 type RdxCollectionState = {
   data: {
@@ -55,7 +48,7 @@ const collectionSlice = createSlice({
 
     deleteCollection(state: RdxCollectionState, action: PayloadAction<string>) {
       delete state.data[action.payload];
-      state.successMessage = "Collection deleted";
+      state.successMessage = "Koleksi dihapus";
     },
 
     updateCollection(state: RdxCollectionState, action: PayloadAction<CollectionType>) {
@@ -66,8 +59,7 @@ const collectionSlice = createSlice({
       }
 
       state.data[action.payload.id] = action.payload;
-
-      state.successMessage = "Collection updated";
+      state.successMessage = "Koleksi anime berhasil diupdate";
     },
 
     addToCollection(state: RdxCollectionState, action: PayloadAction<{ collectionId: string, media: AnimeMediaListItem }>) {
@@ -80,7 +72,7 @@ const collectionSlice = createSlice({
         return state;
       }
 
-      state.data[collectionId].media.push(media);
+      state.data[collectionId].media.unshift(media);
       state.data[collectionId].image = media.coverImage.medium;
       state.data[collectionId].updatedAt = Date.now();
       state.successMessage = `${title} berhasil ditambahkan ke ${state.data[collectionId].title}`;
@@ -89,9 +81,14 @@ const collectionSlice = createSlice({
     removeFromCollection(state: RdxCollectionState, action: PayloadAction<{ collectionId: string, mediaId: number }>) {
       const { collectionId, mediaId } = action.payload;
       state.data[collectionId].media = state.data[collectionId].media.filter(media => media.id !== mediaId);
-      state.data[collectionId].image = state.data[collectionId].media[0].coverImage.medium;
-      state.data[collectionId].updatedAt = Date.now();
 
+      if (state.data[collectionId].media.length === 0) {
+        delete state.data[collectionId];
+        state.successMessage = "Kolesi anime berhasil dihapus";
+        return;
+      }
+
+      state.data[collectionId].image = state.data[collectionId].media[0].coverImage.medium;
       state.successMessage = "Anime berhasil dihapus dari koleksi";
     },
 

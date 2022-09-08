@@ -5,7 +5,7 @@ import Meta from "@/components/meta";
 import { useRouter } from "next/router";
 
 type SearchPageProps = {
-  page: number
+
 }
 
 function SearchPage(props: SearchPageProps) {

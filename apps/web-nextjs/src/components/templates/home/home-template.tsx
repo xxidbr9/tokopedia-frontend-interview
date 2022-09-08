@@ -51,7 +51,7 @@ const HomeTemplate = (props: HomeTemplateProps) => {
 
   const router = useRouter();
 
-  const { data, loading, error, fetchMore } = useQuery<AnimeHomeModel, {perPage: number, randomPage?: number }>(animeSchema.ANIME_HOMEPAGE_SCHEMA, {
+  const { data, loading, error, fetchMore } = useQuery<AnimeHomeModel, { perPage: number, randomPage?: number }>(animeSchema.ANIME_HOMEPAGE_SCHEMA, {
     variables: {
       perPage: 36,
       randomPage: randomTrendPage
@@ -246,7 +246,7 @@ const HomeTemplate = (props: HomeTemplateProps) => {
 
 
 // bottom sheet
-const CustomSheet = styled(Sheet)`
+export const CustomSheet = styled(Sheet)`
 .react-modal-sheet-container{
   background-color: ${colors.surface} !important;
 }
@@ -395,20 +395,20 @@ type CollectionModalProps = {
   onCollectionClick: (id: string) => void
 }
 
-const ModalWrapper = styled.div`
+export const ModalWrapper = styled.div`
   width: 552px;
   padding: 12px 16px;
   background-color: ${colors.surface};
   border-radius: 20px;
 `;
-const ModalContent = styled.div`
+export const ModalContent = styled.div`
   margin:20px 0 24px;
   display: flex;
   flex-direction: column;
   row-gap: 16px;
 `;
 
-const ModalHeader = styled.div`
+export const ModalHeader = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
