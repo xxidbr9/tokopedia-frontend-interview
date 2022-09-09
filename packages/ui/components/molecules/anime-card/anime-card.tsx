@@ -168,7 +168,7 @@ const AnimeCard = (props: AnimeCardProps) => {
                   </div>
                   <div style={{ display: "flex", flexDirection: "row", columnGap: 4 }}>
                     {data.genres.slice(0, 2).map((genre, index) => (
-                      <Chip label={genre} key={index}>
+                      <Chip key={index}>
                         {genre}
                       </Chip>
                     ))}
