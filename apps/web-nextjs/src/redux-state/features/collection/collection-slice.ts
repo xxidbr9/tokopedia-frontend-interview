@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { nanoid } from "nanoid";
-import { AnimeMediaListItem, CollectionType } from "weboo-models";
+import { AnimeMediaListItem, CollectionType, Media } from "weboo-models";
 import { persistReducer } from "redux-persist";
 import storage from 'redux-persist/lib/storage'
 
@@ -62,7 +62,7 @@ const collectionSlice = createSlice({
       state.successMessage = "Koleksi anime berhasil diupdate";
     },
 
-    addToCollection(state: RdxCollectionState, action: PayloadAction<{ collectionId: string, media: AnimeMediaListItem }>) {
+    addToCollection(state: RdxCollectionState, action: PayloadAction<{ collectionId: string, media: AnimeMediaListItem | Media }>) {
       const { collectionId, media } = action.payload;
       const title = media.title.english || media.title.romaji || media.title.native
 
