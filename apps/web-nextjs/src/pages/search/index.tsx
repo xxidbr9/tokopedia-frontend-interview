@@ -10,7 +10,7 @@ type SearchPageProps = {
 
 function SearchPage(props: SearchPageProps) {
   const router = useRouter();
-  const page: number = parseInt(router.query.page as string);
+  const page: number = parseInt(router.query.page as string) || 1;
   
   return (
     <React.Fragment>
