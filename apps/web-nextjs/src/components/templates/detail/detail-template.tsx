@@ -2,7 +2,8 @@ import { rdxCollectionAction, rdxCollectionSelector } from '@/redux-state/featur
 import { rdxScreenSelector } from '@/redux-state/features/screen'
 import styled from '@emotion/styled'
 import Image from 'next/image'
-import React, { useEffect } from 'react'
+import { useRouter } from 'next/router'
+import React, { useEffect, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
@@ -11,7 +12,7 @@ import { Button, Chip, Container, Grid, Modal, PlayIcon, PlusIcon, Typography } 
 import { cutString } from 'ui/helpers/cutString'
 import colors from 'ui/theme/colors'
 import { AnimeMediaListItem, Media } from 'weboo-models'
-import { CollectionModal, NewCollectionModal } from '../home/home-template'
+import { CollectionModal, NewCollectionModal, SheetCollection, SheetNewCollection } from '../home/home-template'
 
 type DetailTemplateProps = {
   data: Media
@@ -58,6 +59,7 @@ const DetailHero = (props: DetailHeroProps) => {
   const banner = isHaveBanner ? data.bannerImage : data.coverImage.extraLarge || data.coverImage.large || data.coverImage.medium
   const coverImage = data.coverImage.extraLarge || data.coverImage.large || data.coverImage.medium
   const title = data.title.english || data.title.romaji || data.title.native || data.title.userPreferred || ""
+  const router = useRouter();
 
   // toggle show more description
   const [showedMore, setShowedMore] = React.useState(false)
@@ -111,27 +113,37 @@ const DetailHero = (props: DetailHeroProps) => {
     setIsModalNewCollectionOpen(false);
   }
 
+  const toastStyle = useMemo(() => ({
+    background: colors.surface,
+    ...(isMobile ? { bottom: "0px", margin: "0 20px", zIndex: 999 } : {})
+  }), [isMobile])
+
   const errorAddToCollection = useSelector(rdxCollectionSelector.getErrorMessage)
   useEffect(() => {
     if (!!errorAddToCollection) {
-      toast.error(errorAddToCollection, { onClose: () => dispatch(rdxCollectionAction.clearError()) })
+      toast.error(errorAddToCollection, { style: toastStyle, onClose: () => dispatch(rdxCollectionAction.clearError()) })
     }
     () => {
       dispatch(rdxCollectionAction.clearError())
     }
-  }, [errorAddToCollection, dispatch])
+  }, [errorAddToCollection, dispatch, toastStyle])
 
   const successAddToCollection = useSelector(rdxCollectionSelector.getSuccessMessage)
   useEffect(() => {
     if (!!successAddToCollection) {
-      toast.success(successAddToCollection, { onClose: () => dispatch(rdxCollectionAction.clearSuccessMessage()) })
+      toast.success(successAddToCollection, { style: toastStyle, onClose: () => dispatch(rdxCollectionAction.clearSuccessMessage()) })
     }
     () => {
       dispatch(rdxCollectionAction.clearSuccessMessage())
     }
-  }, [successAddToCollection, dispatch])
+  }, [successAddToCollection, dispatch, toastStyle])
   // collection end here
 
+  const handleWatchTrailerMobile = () => {
+    // go to youtube
+    const youtubePrefixUrl = "https://www.youtube.com/watch?v="
+    window.open(youtubePrefixUrl + data.trailer.id, "_blank")
+  }
 
   return (
     <React.Fragment>
@@ -237,10 +249,77 @@ const DetailHero = (props: DetailHeroProps) => {
       )}
 
       {isMobile && (
-        <HeroMobileStyled>
-          <Image alt={`banner mobile ${title}`} src={coverImage} layout="responsive" objectFit='cover' width={420} height={520} />
-          <OverlayMobileStyled />
-        </HeroMobileStyled>
+        <React.Fragment>
+          <SheetCollection
+            isOpen={isModalCollectionOpen}
+            onClose={handleCollectionModalClose}
+            onCollectionClick={handleCollectionModalAdded}
+            onNewCollectionClick={handleNewCollectionInModalClicked}
+          />
+          <SheetNewCollection
+            isOpen={isModalNewCollectionOpen}
+            onClose={handleBackToCollection}
+            onSave={handleCreateNewCollection}
+          />
+
+          <HeroMobileStyled>
+            <Image alt={`banner mobile ${title}`} src={coverImage} layout="responsive" objectFit='cover' width={420} height={520} />
+            <OverlayMobileStyled />
+          </HeroMobileStyled>
+          <div style={{ padding: "0 20px" }}>
+            <div style={{ display: "flex", flexDirection: "column", rowGap: "12px" }}>
+              <Typography.Title as='h1' style={{ margin: "0", color: colors.textPrimary, fontWeight: "bold" }}>{title}</Typography.Title>
+              <ButtonGroup>
+                {!!data.trailer && (
+                  <Button prefixIcon={<PlayIcon />} onClick={handleWatchTrailerMobile}>
+                    Tonton Trailer
+                  </Button>
+                )}
+                <Button
+                  aria-label='bookmark-button'
+                  data-testid="bookmark-btn"
+                  isIcon
+                  isOpacity
+                  onClick={() => handleCollectionClick(data)}>
+                  <PlusIcon />
+                </Button>
+              </ButtonGroup>
+              <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
+                {data.isAdult
+                  && (
+                    <React.Fragment>
+                      <Typography.Text size="sm">
+                        18+
+                      </Typography.Text>
+                      <div style={{ margin: "0 4px", color: colors.textSecondary }} >
+                        ∙
+                      </div>
+                    </React.Fragment>
+                  )}
+                <Typography.Text size="sm">
+                  {data.seasonYear}
+                </Typography.Text>
+              </div>
+              <div style={{ display: "flex", flexDirection: "row", columnGap: 4 }}>
+                {data.genres.map((genre, index) => (
+                  <Chip key={index}>
+                    {genre}
+                  </Chip>
+                ))}
+              </div>
+              <Grid columns={4}>
+                <Grid.Item span={4}>
+                  <Typography.Text style={{ color: colors.textSecondary }} dangerouslySetInnerHTML={{ __html: description }} />
+                  <Button onClick={toggleShowedMore} style={{ marginTop: "12px" }} variant="link" >
+                    {showedMore ? "Lebih sedikit" : "Selengkapnya"}
+                  </Button>
+                </Grid.Item>
+              </Grid>
+
+
+            </div>
+          </div>
+        </React.Fragment>
       )}
 
     </React.Fragment>
