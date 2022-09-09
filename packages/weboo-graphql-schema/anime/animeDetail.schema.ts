@@ -17,6 +17,7 @@ query DetailInfo($id: Int) {
     popularity
     averageScore
     meanScore
+    seasonYear
     trending
     studios {
       nodes {
