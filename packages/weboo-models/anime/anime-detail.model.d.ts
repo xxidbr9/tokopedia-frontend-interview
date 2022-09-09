@@ -58,6 +58,8 @@ export interface Media {
   streamingEpisodes: StreamingEpisode[];
   bannerImage: string;
   coverImage: CoverImage;
+  seasonYear: number;
+
 }
 
 export interface AnimeDetailModel {

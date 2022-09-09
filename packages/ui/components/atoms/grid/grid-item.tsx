@@ -6,7 +6,7 @@ type ItemProps = {
   children: React.ReactNode;
   span?: number;
   offset?: number;
-}
+} & React.HTMLAttributes<HTMLDivElement>
 
 const ItemStyled = styled.div<ItemProps>`
   grid-column: span ${props => props.span || 1};
