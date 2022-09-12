@@ -12,7 +12,12 @@ const ContainerStyled = styled.div<ContainerProps>`
   ${props => !props.fluid && `
   @media screen and (min-width: 1440px){
     max-width: 1264px;
-  }`}
+  }
+  
+  @media screen and (min-width: 1024px) and (max-width: 1439px){
+    padding: 0 16px;
+  }
+  `}
 
   ${props => props.isMobile && !props.fluid &&`
     padding-left: 20px;

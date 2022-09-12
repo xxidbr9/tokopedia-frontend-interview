@@ -262,7 +262,7 @@ const DetailHero = (props: DetailHeroProps) => {
             onSave={handleCreateNewCollection}
           />
 
-          <HeroMobileStyled>
+          <HeroMobileStyled style={{ overflowY: "hidden" }}>
             <Image alt={`banner mobile ${title}`} src={coverImage} layout="responsive" objectFit='cover' width={420} height={520} />
             <OverlayMobileStyled />
           </HeroMobileStyled>
@@ -414,7 +414,7 @@ const AnimeEpisodes = (props: AnimeEpisodesProps) => {
 
 
   return (
-    <Container style={{ padding: isMobile ? "20px 24px" : "32px 0" }}>
+    <Container style={{ ...(isMobile ? { padding: "20px 24px" } : { paddingTop: "32px", paddingBottom: "32px" }) }}>
       <Grid columns={isMobile ? 4 : 12} style={{ rowGap: "40px" }}>
         {episodes.map((item, index) => (
           <Grid.Item span={isMobile ? 4 : 3} key={index}>
